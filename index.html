@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Greymatter — Intelligence for Decision-Makers</title>
+    <meta name="description"
+        content="Real-time media monitoring, policy analysis, and strategic research. We track narratives and deliver actionable intelligence for institutions, investors, and governments.">
+
+    <!-- Fav Icon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link href="assets/css/font-awesome-all.css" rel="stylesheet">
+    <link href="assets/css/flaticon.css" rel="stylesheet">
+    <link href="assets/css/owl.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet">
+    <link href="assets/css/animate.css" rel="stylesheet">
+    <link href="assets/css/imagebg.css" rel="stylesheet">
+    <link href="assets/css/color/theme-color.css" id="jssDefault" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/responsive.css" rel="stylesheet">
+
+    <style>
+        /* ============================================
+   GREYMATTER — Light Theme Overrides
+   Matching original Detox color scheme
+   ============================================ */
+
+        /* Hide unneeded template elements */
+        .preloader,
+        .page_direction,
+        .switcher {
+            display: none !important;
+        }
+
+        /* ---- Logo Sizing ---- */
+        .main-header .logo-box .logo img {
+            max-height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .sticky-header .logo-box img,
+        .sticky-header figure.logo-box img {
+            max-height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .mobile-menu .nav-logo img {
+            max-height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* ---- Hero Visual (CSS Dashboard) ---- */
+        .hero-visual {
+            position: relative;
+            min-height: 480px;
+            padding: 30px;
+        }
+
+        .hero-dashboard {
+            position: relative;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(99, 119, 238, 0.15), 0 4px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            z-index: 2;
+            transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-dashboard:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .dash-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 20px;
+            background: #f7f8fc;
+            border-bottom: 1px solid #e8ecf4;
+        }
+
+        .dash-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dash-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+            margin-left: 10px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.03em;
+        }
+
+        .dash-body {
+            padding: 28px 24px;
+            display: flex;
+            gap: 28px;
+            align-items: flex-end;
+        }
+
+        .dash-chart {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            height: 160px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, #6377ee 0%, #8b9bf7 100%);
+            border-radius: 6px 6px 0 0;
+            animation: barGrow 1.2s ease-out forwards;
+            transform-origin: bottom;
+            transform: scaleY(0);
+        }
+
+        @keyframes barGrow {
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        .dash-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .metric-ring {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+
+        .metric-ring svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .ring-animate {
+            stroke-dashoffset: 100;
+            animation: ringFill 1.5s ease-out forwards;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes ringFill {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .ring-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 11px;
+            font-weight: 700;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Floating cards */
+        .hero-float-card {
+            position: absolute;
+            background: #fff;
+            border-radius: 12px;
+            padding: 12px 18px;
+            box-shadow: 0 8px 30px rgba(99, 119, 238, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 3;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            border: 1px solid #f0f2ff;
+        }
+
+        .hero-float-card i {
+            color: #6377ee;
+            font-size: 16px;
+        }
+
+        .float-card-1 {
+            top: 10px;
+            left: -20px;
+        }
+
+        .float-card-2 {
+            bottom: 60px;
+            right: -10px;
+        }
+
+        .float-card-3 {
+            bottom: -10px;
+            left: 40px;
+        }
+
+        /* Network nodes */
+        .hero-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #6377ee;
+            border-radius: 50%;
+            z-index: 1;
+            animation: nodePulse 2s ease-in-out infinite;
+        }
+
+        .node-1 {
+            top: 30px;
+            right: 60px;
+            animation-delay: 0s;
+        }
+
+        .node-2 {
+            top: 50%;
+            left: -10px;
+            animation-delay: 0.7s;
+        }
+
+        .node-3 {
+            bottom: 20px;
+            right: 30%;
+            animation-delay: 1.4s;
+        }
+
+        @keyframes nodePulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .hero-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 991px) {
+            .hero-visual {
+                min-height: 360px;
+                margin-top: 40px;
+            }
+
+            .hero-dashboard {
+                transform: none;
+            }
+
+            .float-card-1 {
+                left: 10px;
+            }
+
+            .float-card-2 {
+                right: 10px;
+            }
+        }
+
+        /* ---- Custom section styles ---- */
+
+        .gm-section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #6377ee;
+            margin-bottom: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gm-section-label::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: #6377ee;
+        }
+
+        /* ---- Services Grid ---- */
+        .gm-services-section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .gm-services-section.alt-bg {
+            background: #f7f8fc;
+        }
+
+        .gm-service-header {
+            margin-bottom: 60px;
+        }
+
+        .gm-service-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #141417;
+            margin-bottom: 12px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gm-service-header-desc {
+            font-size: 16px;
+            font-style: italic;
+            color: #777;
+            line-height: 1.7;
+            border-left: 3px solid #6377ee;
+            padding-left: 20px;
+            max-width: 550px;
+        }
+
+        .gm-service-number {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #6377ee;
+            margin-bottom: 12px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gm-service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .gm-service-card {
+            background: #fff;
+            border: 1px solid #eaedf5;
+            border-radius: 8px;
+            padding: 40px 36px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gm-service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #6377ee;
+            transition: width 0.4s ease;
+        }
+
+        .gm-service-card:hover {
+            box-shadow: 0 12px 40px rgba(99, 119, 238, 0.12);
+            transform: translateY(-4px);
+            border-color: transparent;
+        }
+
+        .gm-service-card:hover::before {
+            width: 100%;
+        }
+
+        .gm-service-card-icon {
+            width: 56px;
+            height: 56px;
+            background: #f0f2ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 22px;
+            color: #6377ee;
+            transition: all 0.3s ease;
+        }
+
+        .gm-service-card:hover .gm-service-card-icon {
+            background: #6377ee;
+            color: #fff;
+        }
+
+        .gm-service-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #141417;
+            margin-bottom: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gm-service-card p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: #777;
+            margin: 0;
+        }
+
+        /* ---- Bridge Quote ---- */
+        .gm-bridge {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #6377ee 0%, #8b9bf5 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .gm-bridge-quote {
+            font-size: 24px;
+            font-style: italic;
+            color: #fff;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+        }
+
+        .gm-bridge-quote em {
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .gm-bridge-icon {
+            font-size: 36px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 24px;
+        }
+
+        /* ---- Audience Grid ---- */
+        .gm-audience-section {
+            padding: 100px 0;
+            background: #fff;
+        }
+
+        .gm-audience-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .gm-audience-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #141417;
+            margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gm-audience-header p {
+            font-size: 16px;
+            color: #777;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .gm-audience-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .gm-audience-card {
+            background: #f7f8fc;
+            border-radius: 8px;
+            padding: 48px 28px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid transparent;
+        }
+
+        .gm-audience-card:hover {
+            background: #fff;
+            box-shadow: 0 12px 40px rgba(99, 119, 238, 0.1);
+            border-color: #eaedf5;
+            transform: translateY(-4px);
+        }
+
+        .gm-audience-icon {
+            width: 72px;
+            height: 72px;
+            background: #f0f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 26px;
+            color: #6377ee;
+            transition: all 0.3s ease;
+        }
+
+        .gm-audience-card:hover .gm-audience-icon {
+            background: #6377ee;
+            color: #fff;
+        }
+
+        .gm-audience-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #141417;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* ---- CTA Section ---- */
+        .gm-cta-section {
+            padding: 100px 0;
+            background: #f7f8fc;
+            text-align: center;
+        }
+
+        .gm-cta-section h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #141417;
+            margin-bottom: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gm-cta-section>.auto-container>p {
+            font-size: 16px;
+            color: #777;
+            max-width: 480px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .gm-cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 991px) {
+            .gm-service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gm-audience-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .gm-audience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gm-bridge-quote {
+                font-size: 18px;
+            }
+
+            .gm-service-header h2,
+            .gm-audience-header h2,
+            .gm-cta-section h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<!-- page wrapper -->
+
+<body class="boxed_wrapper ltr">
+
+    <!-- preloader -->
+    <div class="preloader"></div>
+    <!-- preloader -->
+
+
+    <!-- main header -->
+    <header class="main-header">
+        <div class="outer-container">
+            <div class="header-upper clearfix">
+                <div class="outer-box pull-left">
+                    <div class="logo-box pull-left">
+                        <figure class="logo"><a href="index.html"><img src="assets/images/logo.png"
+                                    alt="Greymatter"></a></figure>
+                    </div>
+                    <div class="menu-area pull-left">
+                        <!--Mobile Navigation Toggler-->
+                        <div class="mobile-nav-toggler">
+                            <i class="icon-bar"></i>
+                            <i class="icon-bar"></i>
+                            <i class="icon-bar"></i>
+                        </div>
+                        <nav class="main-menu navbar-expand-md navbar-light">
+                            <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                                <ul class="navigation clearfix">
+                                    <li class="current"><a href="#home">Home</a></li>
+                                    <li><a href="#about">About</a></li>
+                                    <li class="dropdown"><a href="#services">Services</a>
+                                        <ul>
+                                            <li><a href="#media-intelligence">Media Intelligence</a></li>
+                                            <li><a href="#risk-intelligence">Risk Intelligence</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#audience">Who We Serve</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="menu-right-content pull-right">
+                    <div class="btn-box"><a href="#contact">Request a Brief</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!--sticky Header-->
+        <div class="sticky-header">
+            <div class="container clearfix">
+                <figure class="logo-box"><a href="index.html"><img src="assets/images/small-logo.png"
+                            alt="Greymatter"></a></figure>
+                <div class="menu-area">
+                    <nav class="main-menu clearfix">
+                        <!--Keep This Empty / Menu will come through Javascript-->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- main-header end -->
+
+    <!-- Mobile Menu  -->
+    <div class="mobile-menu">
+        <div class="menu-backdrop"></div>
+        <div class="close-btn"><i class="fas fa-times"></i></div>
+        <nav class="menu-box">
+            <div class="nav-logo"><a href="index.html"><img src="assets/images/logo-2.png" alt="" title=""></a></div>
+            <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+            </div>
+            <div class="contact-info">
+                <h4>Contact Info</h4>
+                <ul>
+                    <li>Dhaka, Bangladesh</li>
+                    <li><a href="mailto:info@greymatter.com">info@greymatter.com</a></li>
+                </ul>
+            </div>
+            <div class="social-links">
+                <ul class="clearfix">
+                    <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
+                    <li><a href="#"><span class="fab fa-twitter"></span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div><!-- End Mobile Menu -->
+
+
+    <!-- banner-section -->
+    <section class="banner-section" id="home">
+        <div class="pattern-box">
+            <div class="pattern-1 wow slideInDown" data-wow-delay="500ms" data-wow-duration="1500ms"
+                style="background-image: url(assets/images/shape/pattern-1.png);"></div>
+            <div class="pattern-2" style="background-image: url(assets/images/shape/pattern-2.png);"></div>
+        </div>
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-12 col-sm-12 content-column">
+                    <div class="content-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+                        <h1>Intelligence for <span>Decision-Makers.</span></h1>
+                        <p>We track what others miss. We translate it into decisions you can act on. Real-time media
+                            monitoring, policy analysis, and strategic research for complex markets.</p>
+                        <div class="btn-box">
+                            <a href="#contact" class="theme-btn style-one">Request a Brief</a>
+                            <a href="#services" class="theme-btn style-two">Our Services</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 image-column">
+                    <div class="hero-visual wow slideInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
+                        <!-- Main Dashboard Card -->
+                        <div class="hero-dashboard">
+                            <div class="dash-header">
+                                <span class="dash-dot" style="background:#e74c3c;"></span>
+                                <span class="dash-dot" style="background:#f1c40f;"></span>
+                                <span class="dash-dot" style="background:#2ecc71;"></span>
+                                <span class="dash-title">Intelligence Dashboard</span>
+                            </div>
+                            <div class="dash-body">
+                                <div class="dash-chart">
+                                    <div class="chart-bar" style="height:45%;animation-delay:0s;"></div>
+                                    <div class="chart-bar" style="height:70%;animation-delay:0.15s;"></div>
+                                    <div class="chart-bar" style="height:55%;animation-delay:0.3s;"></div>
+                                    <div class="chart-bar" style="height:85%;animation-delay:0.45s;"></div>
+                                    <div class="chart-bar" style="height:65%;animation-delay:0.6s;"></div>
+                                    <div class="chart-bar" style="height:90%;animation-delay:0.75s;"></div>
+                                    <div class="chart-bar" style="height:50%;animation-delay:0.9s;"></div>
+                                </div>
+                                <div class="dash-metrics">
+                                    <div class="metric-ring">
+                                        <svg viewBox="0 0 36 36">
+                                            <path
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="#e8ecf4" stroke-width="3" />
+                                            <path
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="#6377ee" stroke-width="3" stroke-dasharray="78, 100"
+                                                class="ring-animate" />
+                                        </svg>
+                                        <span class="ring-label">78%</span>
+                                    </div>
+                                    <div class="metric-ring">
+                                        <svg viewBox="0 0 36 36">
+                                            <path
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="#e8ecf4" stroke-width="3" />
+                                            <path
+                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                                fill="none" stroke="#e74c3c" stroke-width="3" stroke-dasharray="42, 100"
+                                                class="ring-animate" />
+                                        </svg>
+                                        <span class="ring-label">42%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Floating Mini Cards -->
+                        <div class="hero-float-card float-card-1 float-bob-y">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Risk Analysis</span>
+                        </div>
+                        <div class="hero-float-card float-card-2 float-bob-y" style="animation-delay:-1.5s;">
+                            <i class="fas fa-broadcast-tower"></i>
+                            <span>Media Intel</span>
+                        </div>
+                        <div class="hero-float-card float-card-3 float-bob-y" style="animation-delay:-3s;">
+                            <i class="fas fa-search"></i>
+                            <span>Due Diligence</span>
+                        </div>
+                        <!-- Network Nodes -->
+                        <div class="hero-node node-1"></div>
+                        <div class="hero-node node-2"></div>
+                        <div class="hero-node node-3"></div>
+                        <svg class="hero-lines" viewBox="0 0 500 450" preserveAspectRatio="none">
+                            <line x1="80" y1="60" x2="250" y2="120" stroke="#6377ee" stroke-width="1.5"
+                                stroke-opacity="0.25" stroke-dasharray="4,4" />
+                            <line x1="420" y1="80" x2="280" y2="150" stroke="#6377ee" stroke-width="1.5"
+                                stroke-opacity="0.25" stroke-dasharray="4,4" />
+                            <line x1="100" y1="380" x2="220" y2="300" stroke="#6377ee" stroke-width="1.5"
+                                stroke-opacity="0.25" stroke-dasharray="4,4" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- banner-section end -->
+
+
+    <!-- feature-section -->
+    <section class="feature-section" id="services">
+        <div class="auto-container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                    <div class="feature-block-one wow flipInY" data-wow-delay="0ms" data-wow-duration="1500ms">
+                        <div class="inner-box js-tilt">
+                            <div class="icon-box">
+                                <div class="anim-icon">
+                                    <span class="icon icon-1"></span>
+                                    <span class="icon icon-2"></span>
+                                    <span class="icon icon-3"></span>
+                                </div>
+                                <i class="flaticon-tools-and-utensils"></i>
+                            </div>
+                            <h3><a href="#media-intelligence">Media Intelligence</a></h3>
+                            <p>Real-time monitoring across print, broadcast, online, and social platforms with sentiment
+                                analysis.</p>
+                            <div class="btn-box"><a href="#media-intelligence" class="theme-btn style-two">Learn
+                                    More</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                    <div class="feature-block-one wow flipInY" data-wow-delay="300ms" data-wow-duration="1500ms">
+                        <div class="inner-box js-tilt">
+                            <div class="icon-box">
+                                <div class="anim-icon">
+                                    <span class="icon icon-1"></span>
+                                    <span class="icon icon-2"></span>
+                                    <span class="icon icon-3"></span>
+                                </div>
+                                <i class="flaticon-checked"></i>
+                            </div>
+                            <h3><a href="#risk-intelligence">Risk Intelligence</a></h3>
+                            <p>Political, regulatory, trade, and geopolitical risk analysis for informed investment
+                                decisions.</p>
+                            <div class="btn-box"><a href="#risk-intelligence" class="theme-btn style-two">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
+                    <div class="feature-block-one wow flipInY" data-wow-delay="600ms" data-wow-duration="1500ms">
+                        <div class="inner-box js-tilt">
+                            <div class="icon-box">
+                                <div class="anim-icon">
+                                    <span class="icon icon-1"></span>
+                                    <span class="icon icon-2"></span>
+                                    <span class="icon icon-3"></span>
+                                </div>
+                                <i class="flaticon-pie-chart"></i>
+                            </div>
+                            <h3><a href="#risk-intelligence">Due Diligence</a></h3>
+                            <p>Background intelligence on companies, ownership structures, key individuals, and business
+                                relationships.</p>
+                            <div class="btn-box"><a href="#risk-intelligence" class="theme-btn style-two">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- feature-section end -->
+
+
+    <!-- about-section -->
+    <section class="about-section" id="about">
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-12 image-column">
+                    <div id="image_block_01">
+                        <div class="image-box wow slideInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+                            <figure class="image js-tilt"><img src="assets/images/resource/illustration-2.png"
+                                    alt="About Greymatter"></figure>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 content-column">
+                    <div id="content_block_01">
+                        <div class="content-box">
+                            <div class="sec-title wow slideInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                <p>About Greymatter</p>
+                                <h2>We Operate at the Intersection of Intelligence.</h2>
+                            </div>
+                            <div class="text wow slideInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                <p>Greymatter delivers actionable intelligence — helping institutions, investors, and
+                                    governments make informed decisions in complex markets. We track narratives and
+                                    provide the depth that off-the-shelf database searches cannot.</p>
+                            </div>
+                            <ul class="list-item clearfix wow slideInUp" data-wow-delay="600ms"
+                                data-wow-duration="1500ms">
+                                <li>Media Intelligence &amp; Sentiment Tracking</li>
+                                <li>Risk Intelligence &amp; Regulatory Analysis</li>
+                                <li>Entity Due Diligence &amp; Strategic Research</li>
+                            </ul>
+                            <div class="btn-box wow slideInUp" data-wow-delay="900ms" data-wow-duration="1500ms"><a
+                                    href="#services" class="theme-btn style-one">Read More</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- about-section end -->
+
+
+    <!-- process-section -->
+    <section class="process-section bg-color-1">
+        <div class="pattern-box">
+            <div class="pattern-1 wow slideInDown animated" data-wow-delay="500ms" data-wow-duration="1500ms"
+                style="background-image: url(assets/images/shape/pattern-3.png)"></div>
+        </div>
+        <div class="auto-container">
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-12 content-column">
+                    <div id="content_block_02">
+                        <div class="content-box">
+                            <div class="sec-title wow slideInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                                <p>How It Works</p>
+                                <h2>Our Two Core Service Lines</h2>
+                            </div>
+                            <div class="text wow slideInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
+                                <p>Understanding what is being said and understanding what it means for your
+                                    organisation. Our two service lines reflect this — designed to work together or
+                                    independently.</p>
+                            </div>
+                            <div class="inner-box wow slideInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+                                <div class="single-item">
+                                    <div class="count-box">1</div>
+                                    <h3><a href="#media-intelligence">Media Intelligence</a></h3>
+                                    <div class="text">Know what's being said — across every platform, in every language
+                                        that matters.</div>
+                                </div>
+                                <div class="single-item">
+                                    <div class="count-box">2</div>
+                                    <h3><a href="#risk-intelligence">Risk Intelligence</a></h3>
+                                    <div class="text">Understand the environment before you commit — political,
+                                        regulatory, trade, and operational.</div>
+                                </div>
+                                <div class="single-item">
+                                    <div class="count-box">3</div>
+                                    <h3><a href="#contact">Actionable Briefs</a></h3>
+                                    <div class="text">Translated into decisions you can act on — with the depth that
+                                        database searches cannot provide.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 image-column">
+                    <div id="image_block_02">
+                        <div class="image-box wow slideInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
+                            <figure class="image js-tilt"><img src="assets/images/resource/illustration-3.png"
+                                    alt="How Greymatter Works"></figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- process-section end -->
+
+
+    <!-- service-section: Media Intelligence -->
+    <section class="gm-services-section alt-bg" id="media-intelligence">
+        <div class="auto-container">
+            <div class="gm-service-header">
+                <div class="gm-service-number wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms">Service
+                    Line 01</div>
+                <h2 class="wow slideInUp" data-wow-delay="100ms" data-wow-duration="1500ms">Media Intelligence</h2>
+                <div class="gm-service-header-desc wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    Know what's being said — across every platform, in every language that matters.
+                </div>
+            </div>
+            <div class="gm-service-grid">
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-broadcast-tower"></i></div>
+                    <h3>Real-Time Media Monitoring &amp; Sentiment Tracking</h3>
+                    <p>Continuous monitoring across print, broadcast, online, and social platforms. We track narrative
+                        shifts as they happen — including coverage from thousands of regional-language outlets that
+                        global platforms do not reach — and deliver sentiment analysis calibrated for local context.</p>
+                </div>
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>Stakeholder &amp; Influencer Mapping</h3>
+                    <p>Identify the voices shaping opinion in your market. We map the media landscape — journalists,
+                        commentators, institutional sources — so you know whose coverage drives perception and where
+                        pressure is most likely to emerge.</p>
+                </div>
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Crisis Monitoring &amp; Reputation Management</h3>
+                    <p>Early warning systems for reputational threats. We surface negative narratives before they
+                        escalate, track how a story evolves across media cycles, and provide the situational awareness
+                        needed to respond with confidence.</p>
+                </div>
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-chess"></i></div>
+                    <h3>Communications Strategy &amp; Narrative Analysis</h3>
+                    <p>Beyond monitoring — we assess how your messaging is landing, how competitors are positioning
+                        themselves, and where the strategic narrative opportunities lie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- service-section: Media Intelligence end -->
+
+
+    <!-- bridge quote -->
+    <section class="gm-bridge">
+        <div class="auto-container">
+            <div class="gm-bridge-icon wow fadeInDown" data-wow-delay="0ms" data-wow-duration="1500ms">
+                <i class="fas fa-quote-left"></i>
+            </div>
+            <p class="gm-bridge-quote wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                <em>Media Intelligence</em> tells you what is being said.<br>
+                <em>Risk Intelligence</em> tells you what it means for your business.
+            </p>
+        </div>
+    </section>
+    <!-- bridge quote end -->
+
+
+    <!-- service-section: Risk Intelligence -->
+    <section class="gm-services-section" id="risk-intelligence">
+        <div class="auto-container">
+            <div class="gm-service-header">
+                <div class="gm-service-number wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms">Service
+                    Line 02</div>
+                <h2 class="wow slideInUp" data-wow-delay="100ms" data-wow-duration="1500ms">Risk Intelligence</h2>
+                <div class="gm-service-header-desc wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    Understand the environment before you commit — political, regulatory, trade, and operational.
+                </div>
+            </div>
+            <div class="gm-service-grid">
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-landmark"></i></div>
+                    <h3>Political &amp; Regulatory Risk</h3>
+                    <p>Track shifts in government policy, regulatory frameworks, and institutional direction. We monitor
+                        legislative pipelines, ministry announcements, and political dynamics that carry material
+                        implications for business operations and investment decisions — translating signal from noise
+                        for executives who cannot afford to be surprised.</p>
+                </div>
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <h3>Trade &amp; Investment Risk</h3>
+                    <p>Analyse tariff exposure, bilateral trade agreement developments, supply chain vulnerabilities,
+                        and market access conditions. As trade policy becomes increasingly volatile, we provide the
+                        context corporates and investors need to stress-test their exposure and plan accordingly.</p>
+                </div>
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-globe-asia"></i></div>
+                    <h3>Geopolitical Risk</h3>
+                    <p>South Asia sits at the convergence of competing regional and global interests. We track the
+                        geopolitical dynamics — India-Bangladesh-Myanmar relations, US-China strategic competition,
+                        multilateral institution positioning — that shape the operating environment for businesses with
+                        regional exposure.</p>
+                </div>
+                <div class="gm-service-card wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+                    <div class="gm-service-card-icon"><i class="fas fa-user-shield"></i></div>
+                    <h3>Entity Due Diligence</h3>
+                    <p>Background intelligence on companies, ownership structures, key individuals, and business
+                        relationships. Drawing on local-language sources and primary research, our due diligence reports
+                        provide the depth that off-the-shelf database searches cannot.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- service-section: Risk Intelligence end -->
+
+
+    <!-- who we serve -->
+    <section class="gm-audience-section" id="audience">
+        <div class="auto-container">
+            <div class="gm-audience-header">
+                <div class="gm-section-label" style="justify-content: center;">Who We Serve</div>
+                <h2 class="wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms">Built for Consequential
+                    Decisions</h2>
+                <p class="wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Organisations making
+                    high-stakes decisions in complex markets.</p>
+            </div>
+            <div class="gm-audience-grid">
+                <div class="gm-audience-card wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+                    <div class="gm-audience-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Institutional Investors</h3>
+                </div>
+                <div class="gm-audience-card wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+                    <div class="gm-audience-icon"><i class="fas fa-building"></i></div>
+                    <h3>Corporates Entering Emerging Markets</h3>
+                </div>
+                <div class="gm-audience-card wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                    <div class="gm-audience-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Multilateral Organisations</h3>
+                </div>
+                <div class="gm-audience-card wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
+                    <div class="gm-audience-icon"><i class="fas fa-flag"></i></div>
+                    <h3>Diplomatic Missions</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- who we serve end -->
+
+
+    <!-- cta-section -->
+    <section class="gm-cta-section" id="contact">
+        <div class="auto-container">
+            <div class="gm-section-label wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms"
+                style="justify-content: center;">Get Started</div>
+            <h2 class="wow slideInUp" data-wow-delay="100ms" data-wow-duration="1500ms">Start with Intelligence.</h2>
+            <p class="wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Request a sample brief or speak
+                with our team to discuss your specific requirements.</p>
+            <div class="gm-cta-actions wow slideInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+                <a href="mailto:info@greymatter.com" class="theme-btn style-one">Request a Brief <i
+                        class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
+                <a href="mailto:info@greymatter.com" class="theme-btn style-two"><i class="fas fa-envelope"
+                        style="margin-right: 8px;"></i> Speak With Our Team</a>
+            </div>
+        </div>
+    </section>
+    <!-- cta-section end -->
+
+
+    <!-- main-footer -->
+    <footer class="main-footer" id="footer">
+        <div class="auto-container">
+            <div class="footer-top">
+                <div class="row clearfix">
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget about-widget">
+                            <div class="widget-title">
+                                <h3>About Greymatter</h3>
+                            </div>
+                            <div class="widget-content">
+                                <p>Real-time media monitoring, policy analysis, and strategic research. We track
+                                    narratives and deliver actionable intelligence in complex markets.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget links-widget">
+                            <div class="widget-title">
+                                <h3>Services</h3>
+                            </div>
+                            <div class="widget-content">
+                                <ul>
+                                    <li><a href="#media-intelligence">Media Intelligence</a></li>
+                                    <li><a href="#risk-intelligence">Risk Intelligence</a></li>
+                                    <li><a href="#media-intelligence">Sentiment Tracking</a></li>
+                                    <li><a href="#risk-intelligence">Due Diligence</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget links-widget">
+                            <div class="widget-title">
+                                <h3>Company</h3>
+                            </div>
+                            <div class="widget-content">
+                                <ul>
+                                    <li><a href="#about">About Greymatter</a></li>
+                                    <li><a href="#audience">Who We Serve</a></li>
+                                    <li><a href="#contact">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                        <div class="footer-widget contact-widget">
+                            <div class="widget-title">
+                                <h3>Contact Info</h3>
+                            </div>
+                            <div class="widget-content">
+                                <ul>
+                                    <li>Dhaka, Bangladesh</li>
+                                    <li><a href="mailto:info@greymatter.com">info@greymatter.com</a></li>
+                                </ul>
+                            </div>
+                            <ul class="social-links clearfix">
+                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom clearfix">
+                <div class="copyright pull-left">
+                    <p><a href="index.html">Greymatter</a> &copy; 2026 All Right Reserved</p>
+                </div>
+                <ul class="footer-nav pull-right">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- main-footer end -->
+
+
+    <!--Scroll to top-->
+    <button class="scroll-top scroll-to-target" data-target="html">
+        <span class="fa fa-arrow-up"></span>
+    </button>
+
+
+    <!-- jquery plugins -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/wow.js"></script>
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/jquery.fancybox.js"></script>
+    <script src="assets/js/appear.js"></script>
+    <script src="assets/js/scrollbar.js"></script>
+    <script src="assets/js/tilt.jquery.js"></script>
+    <script src="assets/js/jQuery.style.switcher.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+
+    <!-- main-js -->
+    <script src="assets/js/script.js"></script>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+                anchor.addEventListener('click', function (e) {
+                    var target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        var offset = 80;
+                        var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top: top, behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
