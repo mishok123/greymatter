@@ -12,3 +12,11 @@ node_modules/
 
 # Gemini
 .gemini/
+
+# Archives
+*.zip
+
+# PHP (not needed for static site)
+vendor/
+composer.json
+composer.lock
