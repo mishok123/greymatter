@@ -121,29 +121,45 @@ body.gm-v2 .main-header .navigation > li > a {
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.01em;
-    color: var(--gm-text-primary);
+    color: var(--gm-text-primary) !important;
     text-transform: none;
 }
 
 body.gm-v2 .main-header .navigation > li:hover > a,
 body.gm-v2 .main-header .navigation > li.current > a {
-    color: var(--gm-blue);
+    color: var(--gm-blue) !important;
 }
 
-body.gm-v2 .main-header .btn-box a {
-    font-family: var(--gm-font-body);
-    font-size: 14px;
-    font-weight: 600;
-    background: var(--gm-blue);
-    color: #fff;
-    border-radius: 6px;
-    padding: 10px 24px;
-    transition: all var(--gm-duration) var(--gm-ease);
-    border: none;
+body.gm-v2 .main-header .navigation li ul li a {
+    font-family: var(--gm-font-body) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--gm-text-primary) !important;
+    text-transform: none !important;
 }
 
-body.gm-v2 .main-header .btn-box a:hover {
-    background: #1E40AF;
+body.gm-v2 .main-header .navigation li ul li a:hover {
+    color: var(--gm-blue) !important;
+}
+
+body.gm-v2 .main-header .btn-box a,
+body.gm-v2 .main-header .menu-right-content .btn-box a {
+    font-family: var(--gm-font-body) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    background: var(--gm-blue) !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    padding: 10px 24px !important;
+    transition: all var(--gm-duration) var(--gm-ease) !important;
+    border: none !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+
+body.gm-v2 .main-header .btn-box a:hover,
+body.gm-v2 .main-header .menu-right-content .btn-box a:hover {
+    background: #1E40AF !important;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
 }
@@ -524,6 +540,29 @@ body.gm-v2 .sticky-header {
     background: var(--gm-bg-white);
 }
 
+.gm-about__img-wrap {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--gm-shadow-lg);
+}
+
+.gm-about__img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.gm-about__img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    pointer-events: none;
+}
+
 .gm-about__heading {
     font-size: 42px;
     margin-bottom: 32px;
@@ -606,6 +645,29 @@ body.gm-v2 .sticky-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
+}
+
+/* Featured card spans full width for visual hierarchy */
+.gm-svc-grid .gm-svc-card--featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 44px 40px;
+    background: var(--gm-bg-white);
+    border: 1.5px solid var(--gm-blue-muted);
+}
+
+.gm-svc-card--featured .gm-svc-card__icon {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+.gm-svc-card--featured h3 {
+    font-size: 20px;
 }
 
 .gm-svc-card {
@@ -1062,6 +1124,69 @@ body.gm-v2 .modal .theme-btn:hover {
 .gm-reveal-delay-4 { transition-delay: 0.4s; }
 .gm-reveal-delay-5 { transition-delay: 0.5s; }
 .gm-reveal-delay-6 { transition-delay: 0.6s; }
+
+/* ============================================
+   ADDITIONAL OVERRIDES — Template Cleanup
+   ============================================ */
+
+/* Fix footer list bullets and spacing */
+body.gm-v2 .main-footer .widget-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+body.gm-v2 .main-footer .widget-content ul li {
+    padding: 6px 0;
+    border: none;
+}
+
+body.gm-v2 .main-footer .widget-content ul li a {
+    text-decoration: none;
+    transition: color var(--gm-duration) var(--gm-ease);
+}
+
+/* Ensure dark section backgrounds override template */
+.gm-svc--dark {
+    background: var(--gm-bg-dark) !important;
+}
+
+/* Fix template auto-container max-width */
+body.gm-v2 .auto-container {
+    max-width: 1200px;
+}
+
+/* Header nav dropdown styling */
+body.gm-v2 .main-header .navigation li ul {
+    background: var(--gm-bg-white);
+    border: 1px solid var(--gm-border);
+    border-radius: 8px;
+    box-shadow: var(--gm-shadow-lg);
+    overflow: hidden;
+}
+
+body.gm-v2 .main-header .navigation li ul li {
+    border-bottom: 1px solid var(--gm-border-light);
+}
+
+body.gm-v2 .main-header .navigation li ul li:last-child {
+    border-bottom: none;
+}
+
+/* Scroll-to-top button */
+body.gm-v2 .scroll-top {
+    background: var(--gm-blue);
+    color: #fff;
+    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    box-shadow: var(--gm-shadow-md);
+}
+
+body.gm-v2 .scroll-top:hover {
+    background: #1E40AF;
+}
 
 /* ============================================
    RESPONSIVE
