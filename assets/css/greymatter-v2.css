@@ -1433,6 +1433,12 @@ body.gm-v2 .scroll-top:hover {
 /* ============================================
    RESPONSIVE
    ============================================ */
+
+/* Global overflow containment for mobile */
+body.gm-v2 {
+    overflow-x: hidden;
+}
+
 @media (max-width: 1199px) {
     .gm-hero__headline {
         font-size: 48px;
@@ -1446,11 +1452,14 @@ body.gm-v2 .scroll-top:hover {
     .gm-about__heading {
         font-size: 36px;
     }
+    .gm-coverage__title {
+        font-size: 36px;
+    }
 }
 
 @media (max-width: 991px) {
     .gm-hero {
-        padding: 120px 0 80px;
+        padding: 60px 0 80px;
     }
     .gm-hero__headline {
         font-size: 42px;
@@ -1458,6 +1467,9 @@ body.gm-v2 .scroll-top:hover {
     }
     .gm-hero__sub {
         max-width: none;
+    }
+    .gm-hero::after {
+        display: none;
     }
     .gm-snapshot {
         transform: none;
@@ -1480,6 +1492,15 @@ body.gm-v2 .scroll-top:hover {
         grid-template-columns: 1fr 1fr;
         gap: 24px;
     }
+    /* Coverage map at tablet */
+    .gm-coverage__details {
+        padding-left: 0;
+        margin-top: 32px;
+    }
+    /* Header: hide CTA on mobile — it's accessible via mobile menu  */
+    body.gm-v2 .main-header .menu-right-content .btn-box {
+        display: none !important;
+    }
 }
 
 @media (max-width: 575px) {
@@ -1487,6 +1508,9 @@ body.gm-v2 .scroll-top:hover {
         --gm-section-pad-lg: 80px;
         --gm-section-pad-md: 60px;
         --gm-section-pad-sm: 40px;
+    }
+    .gm-hero {
+        padding: 48px 0 60px;
     }
     .gm-hero__headline {
         font-size: 34px;
@@ -1519,5 +1543,34 @@ body.gm-v2 .scroll-top:hover {
     .gm-cta__actions {
         flex-direction: column;
         align-items: center;
+    }
+    /* Coverage map at mobile */
+    .gm-coverage__title {
+        font-size: 28px;
+    }
+    .gm-coverage__map {
+        padding: 0;
+    }
+    .gm-coverage__detail-item {
+        padding: 16px;
+    }
+    .gm-coverage__detail-item h3 {
+        font-size: 15px;
+    }
+    .gm-coverage__detail-item p {
+        font-size: 13px;
+    }
+    /* Header outer container tightened for mobile */
+    body.gm-v2 .main-header .outer-container {
+        padding: 0 16px !important;
+    }
+    /* Scroll-to-top smaller on mobile */
+    body.gm-v2 .scroll-top {
+        width: 38px;
+        height: 38px;
+        right: 16px;
+        bottom: 16px;
+        font-size: 16px;
+        line-height: 38px;
     }
 }
