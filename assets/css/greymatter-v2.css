@@ -603,11 +603,20 @@ body.gm-v2 .sticky-header {
 
 .gm-svc--dark h2,
 .gm-svc--dark h3 {
-    color: var(--gm-text-on-dark);
+    color: #FFFFFF !important;
+}
+
+.gm-svc--dark .gm-svc__title {
+    color: #FFFFFF !important;
+    opacity: 1;
 }
 
 .gm-svc--dark p {
-    color: var(--gm-text-on-dark-muted);
+    color: #CBD5E1;
+}
+
+.gm-svc--dark .gm-svc__desc {
+    color: #CBD5E1;
 }
 
 .gm-svc__header {
