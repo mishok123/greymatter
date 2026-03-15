@@ -924,6 +924,150 @@ body.gm-v2 .menu-area .mobile-nav-toggler .icon-bar {
 }
 
 /* ============================================
+   COVERAGE MAP — Regional Intelligence Reach
+   ============================================ */
+.gm-coverage {
+    padding: var(--gm-section-pad-lg) 0 var(--gm-section-pad-md);
+    background: var(--gm-bg-primary);
+}
+
+.gm-coverage__header {
+    text-align: center;
+    margin-bottom: 56px;
+}
+
+.gm-coverage__title {
+    font-family: var(--gm-font-display);
+    font-size: 42px;
+    line-height: 1.2;
+    color: var(--gm-text-primary);
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+/* Map container */
+.gm-coverage__map {
+    padding: 20px;
+}
+
+.gm-map-svg {
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+}
+
+.gm-map-country {
+    transition: opacity 0.4s ease, fill 0.4s ease;
+    cursor: default;
+}
+
+.gm-map-country:hover {
+    opacity: 0.75;
+}
+
+.gm-map-country--primary:hover {
+    opacity: 0.95;
+}
+
+/* Pulse animation for city dots */
+@keyframes mapPulse {
+    0% { r: 10; opacity: 0.6; }
+    50% { r: 18; opacity: 0.2; }
+    100% { r: 10; opacity: 0.6; }
+}
+
+.gm-map-pulse {
+    animation: mapPulse 3s ease-in-out infinite;
+}
+
+/* Coverage details — right panel */
+.gm-coverage__details {
+    padding-left: 24px;
+}
+
+.gm-coverage__detail-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    padding: 20px;
+    background: var(--gm-bg-white);
+    border-radius: 10px;
+    border: 1px solid var(--gm-border);
+    transition: all var(--gm-duration) var(--gm-ease);
+}
+
+.gm-coverage__detail-item:hover {
+    box-shadow: var(--gm-shadow-card-hover);
+    border-color: var(--gm-blue-muted);
+}
+
+.gm-coverage__detail-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 10px;
+    background: var(--gm-blue-muted);
+    color: var(--gm-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.gm-coverage__detail-item h3 {
+    font-family: var(--gm-font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gm-text-primary);
+    margin-bottom: 6px;
+}
+
+.gm-coverage__detail-item p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gm-text-secondary);
+    margin: 0;
+}
+
+/* Language tags */
+.gm-coverage__lang-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.gm-coverage__lang {
+    display: inline-block;
+    font-family: var(--gm-font-body);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: var(--gm-bg-white);
+    color: var(--gm-text-secondary);
+    border: 1px solid var(--gm-border);
+    transition: all var(--gm-duration) var(--gm-ease);
+}
+
+.gm-coverage__lang:hover {
+    border-color: var(--gm-blue);
+    color: var(--gm-blue);
+}
+
+.gm-coverage__lang--primary {
+    background: var(--gm-blue);
+    color: #fff;
+    border-color: var(--gm-blue);
+}
+
+.gm-coverage__lang--primary:hover {
+    background: #1E40AF;
+    color: #fff;
+}
+
+/* ============================================
    AUDIENCE / WHO WE SERVE
    ============================================ */
 .gm-audience {

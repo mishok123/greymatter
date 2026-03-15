@@ -521,6 +521,164 @@
 
 
     <!-- ============================================
+         COVERAGE MAP — Regional Intelligence Reach
+         ============================================ -->
+    <section class="gm-coverage" id="coverage">
+        <div class="auto-container">
+            <div class="gm-coverage__header">
+                <div class="gm-label gm-reveal" style="justify-content: center;">Regional Coverage</div>
+                <h2 class="gm-coverage__title gm-reveal gm-reveal-delay-1">Intelligence Where It Matters</h2>
+                <p class="gm-reveal gm-reveal-delay-2"
+                    style="max-width: 560px; margin: 0 auto; text-align: center; color: var(--gm-text-secondary);">
+                    Deep coverage across South Asia and beyond — monitoring local-language sources that global platforms miss.
+                </p>
+            </div>
+
+            <div class="row clearfix align-items-center">
+                <!-- Left: SVG Map -->
+                <div class="col-lg-7 col-md-12 col-sm-12">
+                    <div class="gm-coverage__map gm-reveal">
+                        <svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" class="gm-map-svg">
+                            <!-- Background grid lines for editorial feel -->
+                            <defs>
+                                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--gm-border)" stroke-width="0.5" opacity="0.3"/>
+                                </pattern>
+                                <!-- Glow filter for highlighted countries -->
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="blur"/>
+                                    <feMerge>
+                                        <feMergeNode in="blur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                                <!-- Pulse animation for city dots -->
+                                <radialGradient id="pulseGrad" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="var(--gm-blue)" stop-opacity="0.6"/>
+                                    <stop offset="100%" stop-color="var(--gm-blue)" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <rect width="800" height="700" fill="url(#grid)"/>
+
+                            <!-- Pakistan -->
+                            <path d="M120,180 L160,120 L200,100 L240,110 L260,140 L280,160 L300,150 L310,180 L290,220 L300,260 L310,300 L280,340 L250,380 L220,400 L190,380 L170,340 L140,300 L120,260 L110,220 Z"
+                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.5" class="gm-map-country"/>
+
+                            <!-- India -->
+                            <path d="M260,140 L300,120 L340,100 L380,90 L420,100 L460,120 L480,150 L500,130 L520,150 L540,180 L530,220 L520,200 L500,210 L490,240 L500,270 L510,300 L520,340 L500,380 L480,400 L450,430 L420,460 L400,500 L380,530 L370,560 L360,540 L350,500 L340,460 L320,440 L300,420 L280,400 L280,340 L310,300 L300,260 L290,220 L300,180 L280,160 Z"
+                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.6" class="gm-map-country"/>
+
+                            <!-- Nepal -->
+                            <path d="M340,160 L380,140 L420,135 L460,140 L470,155 L440,165 L400,170 L360,172 L340,168 Z"
+                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.5" class="gm-map-country"/>
+
+                            <!-- Bangladesh (Primary — highlighted) -->
+                            <path d="M500,210 L520,200 L540,210 L555,230 L560,260 L550,290 L535,310 L520,300 L510,280 L500,270 L490,240 Z"
+                                  fill="var(--gm-blue)" stroke="#1E40AF" stroke-width="2" opacity="0.85" filter="url(#glow)" class="gm-map-country gm-map-country--primary"/>
+
+                            <!-- Myanmar -->
+                            <path d="M560,200 L580,180 L600,190 L620,220 L630,260 L640,300 L650,350 L640,400 L620,430 L600,450 L590,420 L580,380 L570,340 L560,300 L550,290 L560,260 L555,230 Z"
+                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.45" class="gm-map-country"/>
+
+                            <!-- Sri Lanka -->
+                            <path d="M390,550 L410,540 L420,560 L415,590 L400,600 L385,585 L385,565 Z"
+                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.5" class="gm-map-country"/>
+
+                            <!-- Connection lines from Bangladesh to other regions -->
+                            <line x1="530" y1="250" x2="380" y2="300" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
+                            <line x1="530" y1="250" x2="200" y2="280" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
+                            <line x1="530" y1="250" x2="600" y2="320" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
+                            <line x1="530" y1="250" x2="400" y2="570" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
+
+                            <!-- City dots with pulse effect -->
+                            <!-- Dhaka (Primary) -->
+                            <circle cx="530" cy="250" r="16" fill="url(#pulseGrad)" class="gm-map-pulse"/>
+                            <circle cx="530" cy="250" r="5" fill="var(--gm-blue)" stroke="#fff" stroke-width="2"/>
+                            <text x="542" y="242" fill="var(--gm-navy)" font-size="11" font-weight="600" font-family="Inter, sans-serif">Dhaka</text>
+
+                            <!-- Delhi -->
+                            <circle cx="320" cy="200" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 0.5s"/>
+                            <circle cx="320" cy="200" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
+                            <text x="330" y="196" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Delhi</text>
+
+                            <!-- Mumbai -->
+                            <circle cx="310" cy="380" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 1s"/>
+                            <circle cx="310" cy="380" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
+                            <text x="290" y="400" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Mumbai</text>
+
+                            <!-- Islamabad -->
+                            <circle cx="210" cy="170" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 1.5s"/>
+                            <circle cx="210" cy="170" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
+                            <text x="168" y="162" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Islamabad</text>
+
+                            <!-- Yangon -->
+                            <circle cx="610" cy="380" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 2s"/>
+                            <circle cx="610" cy="380" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
+                            <text x="620" y="376" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Yangon</text>
+
+                            <!-- Colombo -->
+                            <circle cx="398" cy="575" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 2.5s"/>
+                            <circle cx="398" cy="575" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
+                            <text x="412" y="572" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Colombo</text>
+
+                            <!-- Legend -->
+                            <g transform="translate(20, 640)">
+                                <circle cx="8" cy="8" r="5" fill="var(--gm-blue)" opacity="0.85"/>
+                                <text x="20" y="12" fill="var(--gm-text-muted)" font-size="10" font-family="Inter, sans-serif">Primary coverage</text>
+                                <circle cx="148" cy="8" r="5" fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1"/>
+                                <text x="160" y="12" fill="var(--gm-text-muted)" font-size="10" font-family="Inter, sans-serif">Extended coverage</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Right: Coverage Details -->
+                <div class="col-lg-5 col-md-12 col-sm-12">
+                    <div class="gm-coverage__details">
+                        <div class="gm-coverage__detail-item gm-reveal">
+                            <div class="gm-coverage__detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h3>Primary Market: Bangladesh</h3>
+                                <p>Deep coverage of Bangla-language media, policy announcements, regulatory filings, and parliamentary proceedings — sources that international platforms do not index.</p>
+                            </div>
+                        </div>
+                        <div class="gm-coverage__detail-item gm-reveal gm-reveal-delay-1">
+                            <div class="gm-coverage__detail-icon"><i class="fas fa-globe-asia"></i></div>
+                            <div>
+                                <h3>South Asia & Indo-Pacific</h3>
+                                <p>Regional monitoring across India, Myanmar, Nepal, Sri Lanka, and Pakistan — tracking cross-border dynamics that affect investment and policy environments.</p>
+                            </div>
+                        </div>
+                        <div class="gm-coverage__detail-item gm-reveal gm-reveal-delay-2">
+                            <div class="gm-coverage__detail-icon"><i class="fas fa-language"></i></div>
+                            <div>
+                                <h3>Local-Language Capability</h3>
+                                <p>Native-language analysts covering Bangla, Hindi, Urdu, Tamil, Sinhala, Burmese, and Nepali — supplemented by English, Arabic, Mandarin, and French sources.</p>
+                            </div>
+                        </div>
+                        <div class="gm-coverage__lang-grid gm-reveal gm-reveal-delay-3">
+                            <span class="gm-coverage__lang gm-coverage__lang--primary">Bangla</span>
+                            <span class="gm-coverage__lang">Hindi</span>
+                            <span class="gm-coverage__lang">Urdu</span>
+                            <span class="gm-coverage__lang">Tamil</span>
+                            <span class="gm-coverage__lang">Sinhala</span>
+                            <span class="gm-coverage__lang">Burmese</span>
+                            <span class="gm-coverage__lang">Nepali</span>
+                            <span class="gm-coverage__lang">English</span>
+                            <span class="gm-coverage__lang">Arabic</span>
+                            <span class="gm-coverage__lang">Mandarin</span>
+                            <span class="gm-coverage__lang">French</span>
+                            <span class="gm-coverage__lang">Japanese</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- coverage map end -->
+
+
+    <!-- ============================================
          WHO WE SERVE
          ============================================ -->
     <section class="gm-audience" id="audience">
