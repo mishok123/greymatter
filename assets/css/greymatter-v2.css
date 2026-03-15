@@ -146,7 +146,7 @@ body.gm-v2 .main-header .outer-box {
 /* Tighten logo — kill the 61px top padding and 125px right margin */
 body.gm-v2 .main-header .outer-container .logo-box {
     padding: 16px 0 16px 0 !important;
-    margin-right: 48px !important;
+    margin-right: 36px !important;
     float: none !important;
 }
 
