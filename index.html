@@ -13,11 +13,10 @@
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap"
         rel="stylesheet">
 
     <!-- Stylesheets -->
@@ -32,571 +31,13 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/responsive.css" rel="stylesheet">
 
-    <style>
-        /* ============================================
-   GREYMATTER — Light Theme Overrides
-   Matching original Detox color scheme
-   ============================================ */
-
-        /* Hide unneeded template elements */
-        .preloader,
-        .page_direction,
-        .switcher {
-            display: none !important;
-        }
-
-        /* ---- Logo Sizing ---- */
-        .main-header .logo-box .logo img {
-            max-height: 60px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .sticky-header .logo-box img,
-        .sticky-header figure.logo-box img {
-            max-height: 45px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .mobile-menu .nav-logo img {
-            max-height: 60px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        /* ---- Hero Visual (CSS Dashboard) ---- */
-        .hero-visual {
-            position: relative;
-            min-height: 480px;
-            padding: 30px;
-        }
-
-        .hero-dashboard {
-            position: relative;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 20px 60px rgba(99, 119, 238, 0.15), 0 4px 20px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            z-index: 2;
-            transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
-            transition: transform 0.5s ease;
-        }
-
-        .hero-dashboard:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-        }
-
-        .dash-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 12px 20px;
-            background: #f7f8fc;
-            border-bottom: 1px solid #e8ecf4;
-        }
-
-        .dash-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .dash-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #999;
-            margin-left: 10px;
-            font-family: 'Poppins', sans-serif;
-            letter-spacing: 0.03em;
-        }
-
-        .dash-body {
-            padding: 28px 24px;
-            display: flex;
-            gap: 28px;
-            align-items: flex-end;
-        }
-
-        .dash-chart {
-            flex: 1;
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-            height: 160px;
-        }
-
-        .chart-bar {
-            flex: 1;
-            background: linear-gradient(180deg, #a8a9a9 0%, #454545 100%);
-            border-radius: 6px 6px 0 0;
-            animation: barGrow 1.2s ease-out forwards;
-            transform-origin: bottom;
-            transform: scaleY(0);
-        }
-
-        @keyframes barGrow {
-            to {
-                transform: scaleY(1);
-            }
-        }
-
-        .dash-metrics {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .metric-ring {
-            position: relative;
-            width: 70px;
-            height: 70px;
-        }
-
-        .metric-ring svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-
-        .ring-animate {
-            stroke-dashoffset: 100;
-            animation: ringFill 1.5s ease-out forwards;
-            animation-delay: 0.6s;
-        }
-
-        @keyframes ringFill {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        .ring-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 11px;
-            font-weight: 700;
-            color: #333;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* Floating cards */
-        .hero-float-card {
-            position: absolute;
-            background: #fff;
-            border-radius: 12px;
-            padding: 12px 18px;
-            box-shadow: 0 8px 30px rgba(99, 119, 238, 0.15);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 3;
-            font-family: 'Poppins', sans-serif;
-            font-size: 12px;
-            font-weight: 600;
-            color: #333;
-            border: 1px solid #f0f2ff;
-        }
-
-        .hero-float-card i {
-            color: #a8a9a9;
-            font-size: 16px;
-        }
-
-        .float-card-1 {
-            top: 10px;
-            left: -20px;
-        }
-
-        .float-card-2 {
-            bottom: 60px;
-            right: -10px;
-        }
-
-        .float-card-3 {
-            bottom: -10px;
-            left: 40px;
-        }
-
-        /* Network nodes */
-        .hero-node {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #a8a9a9;
-            border-radius: 50%;
-            z-index: 1;
-            animation: nodePulse 2s ease-in-out infinite;
-        }
-
-        .node-1 {
-            top: 30px;
-            right: 60px;
-            animation-delay: 0s;
-        }
-
-        .node-2 {
-            top: 50%;
-            left: -10px;
-            animation-delay: 0.7s;
-        }
-
-        .node-3 {
-            bottom: 20px;
-            right: 30%;
-            animation-delay: 1.4s;
-        }
-
-        @keyframes nodePulse {
-
-            0%,
-            100% {
-                opacity: 0.3;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.5);
-            }
-        }
-
-        .hero-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        @media (max-width: 991px) {
-            .hero-visual {
-                min-height: 360px;
-                margin-top: 40px;
-            }
-
-            .hero-dashboard {
-                transform: none;
-            }
-
-            .float-card-1 {
-                left: 10px;
-            }
-
-            .float-card-2 {
-                right: 10px;
-            }
-        }
-
-        /* ---- Custom section styles ---- */
-
-        .gm-section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #a8a9a9;
-            margin-bottom: 16px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .gm-section-label::before {
-            content: '';
-            width: 30px;
-            height: 2px;
-            background: #a8a9a9;
-        }
-
-        /* ---- Services Grid ---- */
-        .gm-services-section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .gm-services-section.alt-bg {
-            background: #f7f8fc;
-        }
-
-        .gm-service-header {
-            margin-bottom: 60px;
-        }
-
-        .gm-service-header h2 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #141417;
-            margin-bottom: 12px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .gm-service-header-desc {
-            font-size: 16px;
-            font-style: italic;
-            color: #777;
-            line-height: 1.7;
-            border-left: 3px solid #a8a9a9;
-            padding-left: 20px;
-            max-width: 550px;
-        }
-
-        .gm-service-number {
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: #a8a9a9;
-            margin-bottom: 12px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .gm-service-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .gm-service-card {
-            background: #fff;
-            border: 1px solid #eaedf5;
-            border-radius: 8px;
-            padding: 40px 36px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .gm-service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: #a8a9a9;
-            transition: width 0.4s ease;
-        }
-
-        .gm-service-card:hover {
-            box-shadow: 0 12px 40px rgba(99, 119, 238, 0.12);
-            transform: translateY(-4px);
-            border-color: transparent;
-        }
-
-        .gm-service-card:hover::before {
-            width: 100%;
-        }
-
-        .gm-service-card-icon {
-            width: 56px;
-            height: 56px;
-            background: #f0f2ff;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            font-size: 22px;
-            color: #a8a9a9;
-            transition: all 0.3s ease;
-        }
-
-        .gm-service-card:hover .gm-service-card-icon {
-            background: #a8a9a9;
-            color: #fff;
-        }
-
-        .gm-service-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #141417;
-            margin-bottom: 14px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .gm-service-card p {
-            font-size: 15px;
-            line-height: 1.75;
-            color: #777;
-            margin: 0;
-        }
-
-        /* ---- Bridge Quote ---- */
-        .gm-bridge {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #a8a9a9 0%, #454545 100%);
-            text-align: center;
-            position: relative;
-        }
-
-        .gm-bridge-quote {
-            font-size: 24px;
-            font-style: italic;
-            color: #fff;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.7;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-        }
-
-        .gm-bridge-quote em {
-            font-style: italic;
-            font-weight: 600;
-        }
-
-        .gm-bridge-icon {
-            font-size: 36px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 24px;
-        }
-
-        /* ---- Audience Grid ---- */
-        .gm-audience-section {
-            padding: 100px 0;
-            background: #fff;
-        }
-
-        .gm-audience-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .gm-audience-header h2 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #141417;
-            margin-bottom: 10px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .gm-audience-header p {
-            font-size: 16px;
-            color: #777;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .gm-audience-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-        }
-
-        .gm-audience-card {
-            background: #f7f8fc;
-            border-radius: 8px;
-            padding: 48px 28px;
-            text-align: center;
-            transition: all 0.4s ease;
-            border: 1px solid transparent;
-        }
-
-        .gm-audience-card:hover {
-            background: #fff;
-            box-shadow: 0 12px 40px rgba(99, 119, 238, 0.1);
-            border-color: #eaedf5;
-            transform: translateY(-4px);
-        }
-
-        .gm-audience-icon {
-            width: 72px;
-            height: 72px;
-            background: #f0f2ff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            font-size: 26px;
-            color: #a8a9a9;
-            transition: all 0.3s ease;
-        }
-
-        .gm-audience-card:hover .gm-audience-icon {
-            background: #a8a9a9;
-            color: #fff;
-        }
-
-        .gm-audience-card h3 {
-            font-size: 17px;
-            font-weight: 600;
-            color: #141417;
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        /* ---- CTA Section ---- */
-        .gm-cta-section {
-            padding: 100px 0;
-            background: #f7f8fc;
-            text-align: center;
-        }
-
-        .gm-cta-section h2 {
-            font-size: 42px;
-            font-weight: 700;
-            color: #141417;
-            margin-bottom: 16px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .gm-cta-section>.auto-container>p {
-            font-size: 16px;
-            color: #777;
-            max-width: 480px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
-        }
-
-        .gm-cta-actions {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* ---- Responsive ---- */
-        @media (max-width: 991px) {
-            .gm-service-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .gm-audience-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 575px) {
-            .gm-audience-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .gm-bridge-quote {
-                font-size: 18px;
-            }
-
-            .gm-service-header h2,
-            .gm-audience-header h2,
-            .gm-cta-section h2 {
-                font-size: 28px;
-            }
-        }
-    </style>
+    <!-- Greymatter V2 Design System -->
+    <link href="assets/css/greymatter-v2.css" rel="stylesheet">
 </head>
 
 <!-- page wrapper -->
 
-<body class="boxed_wrapper ltr">
+<body class="boxed_wrapper ltr gm-v2">
 
     <!-- preloader -->
     <div class="preloader"></div>
@@ -684,311 +125,270 @@
     </div><!-- End Mobile Menu -->
 
 
-    <!-- banner-section -->
-    <section class="banner-section" id="home">
-        <div class="pattern-box">
-            <div class="pattern-1 wow slideInDown" data-wow-delay="500ms" data-wow-duration="1500ms"
-                style="background-image: url(assets/images/shape/pattern-1.png);"></div>
-            <div class="pattern-2" style="background-image: url(assets/images/shape/pattern-2.png);"></div>
-        </div>
+    <!-- ============================================
+         HERO SECTION
+         ============================================ -->
+    <section class="gm-hero" id="home">
         <div class="auto-container">
-            <div class="row clearfix">
-                <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-                    <div class="content-box wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <h1>Intelligence for <span>Decision-Makers.</span></h1>
-                        <p>We track what others miss. We translate it into decisions you can act on.</p>
-                        <div class="btn-box">
+            <div class="row clearfix align-items-center">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="gm-hero__content">
+                        <div class="gm-label gm-reveal">Strategic Intelligence</div>
+                        <h1 class="gm-hero__headline gm-reveal gm-reveal-delay-1">
+                            Intelligence for<br><em>Decision-Makers.</em>
+                        </h1>
+                        <p class="gm-hero__sub gm-reveal gm-reveal-delay-2">
+                            We track what others miss — across media, policy, and risk — and translate it into
+                            decisions you can act on.
+                        </p>
+                        <div class="gm-hero__actions gm-reveal gm-reveal-delay-3">
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#modalRequestBrief"
-                                class="theme-btn style-one">Request a Brief</a>
-                            <a href="#services" class="theme-btn style-two">Our Services</a>
+                                class="gm-btn gm-btn--primary">Request a Brief <i
+                                    class="fas fa-arrow-right"></i></a>
+                            <a href="#services" class="gm-btn gm-btn--outline">Our Services</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12 col-sm-12 image-column">
-                    <div class="hero-visual wow slideInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <!-- Main Dashboard Card -->
-                        <div class="hero-dashboard">
-                            <div class="dash-header">
-                                <span class="dash-dot" style="background:#e74c3c;"></span>
-                                <span class="dash-dot" style="background:#f1c40f;"></span>
-                                <span class="dash-dot" style="background:#2ecc71;"></span>
-                                <span class="dash-title">Intelligence Dashboard</span>
-                            </div>
-                            <div class="dash-body">
-                                <div class="dash-chart">
-                                    <div class="chart-bar" style="height:45%;animation-delay:0s;"></div>
-                                    <div class="chart-bar" style="height:70%;animation-delay:0.15s;"></div>
-                                    <div class="chart-bar" style="height:55%;animation-delay:0.3s;"></div>
-                                    <div class="chart-bar" style="height:85%;animation-delay:0.45s;"></div>
-                                    <div class="chart-bar" style="height:65%;animation-delay:0.6s;"></div>
-                                    <div class="chart-bar" style="height:90%;animation-delay:0.75s;"></div>
-                                    <div class="chart-bar" style="height:50%;animation-delay:0.9s;"></div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="gm-hero__visual gm-reveal gm-reveal-delay-3">
+                        <!-- Intelligence Snapshot Panel -->
+                        <div class="gm-snapshot">
+                            <div class="gm-snapshot__header">
+                                <span class="gm-snapshot__title">Intelligence Dashboard</span>
+                                <div class="gm-snapshot__dots">
+                                    <span style="background:#EF4444;"></span>
+                                    <span style="background:#F59E0B;"></span>
+                                    <span style="background:#10B981;"></span>
                                 </div>
-                                <div class="dash-metrics">
-                                    <div class="metric-ring">
-                                        <svg viewBox="0 0 36 36">
-                                            <path
-                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                                fill="none" stroke="#e8ecf4" stroke-width="3" />
-                                            <path
-                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                                fill="none" stroke="#a8a9a9" stroke-width="3" stroke-dasharray="78, 100"
-                                                class="ring-animate" />
-                                        </svg>
-                                        <span class="ring-label">78%</span>
+                            </div>
+                            <div class="gm-snapshot__body">
+                                <!-- Metrics Row -->
+                                <div class="gm-snap-metrics">
+                                    <div class="gm-snap-metric">
+                                        <span class="gm-snap-metric__value" data-count="2847">0</span>
+                                        <span class="gm-snap-metric__label">Sources Today</span>
                                     </div>
-                                    <div class="metric-ring">
-                                        <svg viewBox="0 0 36 36">
-                                            <path
-                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                                fill="none" stroke="#e8ecf4" stroke-width="3" />
-                                            <path
-                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                                fill="none" stroke="#e74c3c" stroke-width="3" stroke-dasharray="42, 100"
-                                                class="ring-animate" />
-                                        </svg>
-                                        <span class="ring-label">42%</span>
+                                    <div class="gm-snap-metric">
+                                        <span class="gm-snap-metric__value" data-count="12">0</span>
+                                        <span class="gm-snap-metric__label">Languages</span>
+                                    </div>
+                                    <div class="gm-snap-metric">
+                                        <span class="gm-snap-metric__value" data-count="94">0</span>
+                                        <span class="gm-snap-metric__label">Risk Score</span>
+                                    </div>
+                                </div>
+
+                                <!-- Mini Bar Chart -->
+                                <div class="gm-snap-chart">
+                                    <div class="gm-snap-bar gm-snap-bar--blue"
+                                        style="height:45%;animation-delay:0.1s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--light"
+                                        style="height:70%;animation-delay:0.2s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--blue"
+                                        style="height:55%;animation-delay:0.3s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--accent"
+                                        style="height:85%;animation-delay:0.4s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--blue"
+                                        style="height:65%;animation-delay:0.5s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--navy"
+                                        style="height:92%;animation-delay:0.6s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--light"
+                                        style="height:48%;animation-delay:0.7s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--blue"
+                                        style="height:75%;animation-delay:0.8s;"></div>
+                                </div>
+
+                                <!-- Live Alert Feed -->
+                                <div class="gm-snap-feed">
+                                    <div class="gm-snap-feed__item">
+                                        <span class="gm-snap-feed__dot gm-snap-feed__dot--red"></span>
+                                        <div>
+                                            <span class="gm-snap-feed__text">Regulatory shift detected — NBR
+                                                import tariff amendment</span>
+                                            <span class="gm-snap-feed__time">12 min ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="gm-snap-feed__item">
+                                        <span class="gm-snap-feed__dot gm-snap-feed__dot--amber"></span>
+                                        <div>
+                                            <span class="gm-snap-feed__text">Sentiment shift — energy sector
+                                                media coverage trending negative</span>
+                                            <span class="gm-snap-feed__time">1 hr ago</span>
+                                        </div>
+                                    </div>
+                                    <div class="gm-snap-feed__item">
+                                        <span class="gm-snap-feed__dot gm-snap-feed__dot--green"></span>
+                                        <div>
+                                            <span class="gm-snap-feed__text">Due diligence report completed — Entity
+                                                XR-2041</span>
+                                            <span class="gm-snap-feed__time">3 hrs ago</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Floating Mini Cards -->
-                        <div class="hero-float-card float-card-1 float-bob-y">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Risk Analysis</span>
-                        </div>
-                        <div class="hero-float-card float-card-2 float-bob-y" style="animation-delay:-1.5s;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- hero section end -->
+
+
+    <!-- ============================================
+         CREDIBILITY STRIP — Operational Scale
+         ============================================ -->
+    <section class="gm-cred-strip">
+        <div class="auto-container">
+            <div class="gm-cred-grid">
+                <div class="gm-cred-item gm-reveal">
+                    <span class="gm-cred-value" data-count="15000">0</span>
+                    <span class="gm-cred-label">Sources Monitored</span>
+                </div>
+                <div class="gm-cred-item gm-reveal gm-reveal-delay-1">
+                    <span class="gm-cred-value" data-count="12">0</span>
+                    <span class="gm-cred-label">Languages Covered</span>
+                </div>
+                <div class="gm-cred-item gm-reveal gm-reveal-delay-2">
+                    <span class="gm-cred-value" data-count="500">0</span>
+                    <span class="gm-cred-label">Regional Outlets</span>
+                </div>
+                <div class="gm-cred-item gm-reveal gm-reveal-delay-3">
+                    <span class="gm-cred-value">24/7</span>
+                    <span class="gm-cred-label">Monitoring Coverage</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- credibility strip end -->
+
+
+    <!-- ============================================
+         ABOUT SECTION
+         ============================================ -->
+    <section class="gm-about" id="about">
+        <div class="auto-container">
+            <div class="row clearfix align-items-center">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="gm-reveal">
+                        <figure class="image js-tilt"><img src="assets/images/resource/illustration-2.png"
+                                alt="About Greymatter" style="max-width: 100%; border-radius: 12px;"></figure>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="gm-reveal">
+                        <div class="gm-label">About Greymatter</div>
+                        <h2 class="gm-about__heading">We Operate at the Intersection of Intelligence.</h2>
+                    </div>
+                    <p class="gm-about__text gm-reveal gm-reveal-delay-1">
+                        Real-time media monitoring, policy analysis, and strategic research. We track
+                        narratives and deliver actionable intelligence — helping institutions, investors,
+                        and governments make informed decisions in complex markets.
+                    </p>
+                    <p class="gm-about__highlight gm-reveal gm-reveal-delay-2">
+                        Greymatter operates at the intersection of two disciplines: understanding what is
+                        being said, and understanding what it means for your organisation.
+                    </p>
+                    <p class="gm-about__text gm-reveal gm-reveal-delay-3">
+                        Our two core service lines reflect this — <strong>Media Intelligence</strong> and
+                        <strong>Risk Intelligence</strong> — designed to work together or independently
+                        depending on your needs.
+                    </p>
+                    <div class="gm-reveal gm-reveal-delay-4" style="margin-top: 32px;">
+                        <a href="#services" class="gm-btn gm-btn--outline gm-btn--sm">Explore Our Services <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- about section end -->
+
+
+    <!-- ============================================
+         TWO CORE SERVICE LINES — Overview Cards
+         ============================================ -->
+    <section id="services" style="padding: 100px 0 60px; background: var(--gm-bg-white); border-top: 1px solid var(--gm-border);">
+        <div class="auto-container">
+            <div class="text-center gm-reveal" style="margin-bottom: 60px;">
+                <div class="gm-label" style="justify-content: center;">Core Capabilities</div>
+                <h2 style="font-family: var(--gm-font-display); font-size: 42px; color: var(--gm-navy); margin-bottom: 14px;">
+                    Two Service Lines. One Clear Purpose.</h2>
+                <p style="max-width: 560px; margin: 0 auto; color: var(--gm-text-secondary); font-size: 17px;">
+                    Understanding what is being said — and understanding what it means for your organisation.
+                </p>
+            </div>
+            <div class="row" style="gap: 0;">
+                <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 30px;">
+                    <div class="gm-svc-card gm-reveal" style="height: 100%; text-align: center; padding: 48px 36px;">
+                        <div class="gm-svc-card__icon"
+                            style="margin: 0 auto 24px; width: 64px; height: 64px; font-size: 26px;">
                             <i class="fas fa-broadcast-tower"></i>
-                            <span>Media Intel</span>
                         </div>
-                        <div class="hero-float-card float-card-3 float-bob-y" style="animation-delay:-3s;">
-                            <i class="fas fa-search"></i>
-                            <span>Due Diligence</span>
+                        <h3 style="font-size: 22px; margin-bottom: 14px;">Media Intelligence</h3>
+                        <p style="margin-bottom: 20px;">Know what's being said — across every platform, in every
+                            language that matters. Real-time monitoring with sentiment analysis calibrated for local
+                            context.</p>
+                        <a href="#media-intelligence" class="gm-btn gm-btn--outline gm-btn--sm">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12" style="margin-bottom: 30px;">
+                    <div class="gm-svc-card gm-reveal gm-reveal-delay-2"
+                        style="height: 100%; text-align: center; padding: 48px 36px;">
+                        <div class="gm-svc-card__icon"
+                            style="margin: 0 auto 24px; width: 64px; height: 64px; font-size: 26px;">
+                            <i class="fas fa-shield-alt"></i>
                         </div>
-                        <!-- Network Nodes -->
-                        <div class="hero-node node-1"></div>
-                        <div class="hero-node node-2"></div>
-                        <div class="hero-node node-3"></div>
-                        <svg class="hero-lines" viewBox="0 0 500 450" preserveAspectRatio="none">
-                            <line x1="80" y1="60" x2="250" y2="120" stroke="#a8a9a9" stroke-width="1.5"
-                                stroke-opacity="0.25" stroke-dasharray="4,4" />
-                            <line x1="420" y1="80" x2="280" y2="150" stroke="#a8a9a9" stroke-width="1.5"
-                                stroke-opacity="0.25" stroke-dasharray="4,4" />
-                            <line x1="100" y1="380" x2="220" y2="300" stroke="#a8a9a9" stroke-width="1.5"
-                                stroke-opacity="0.25" stroke-dasharray="4,4" />
-                        </svg>
+                        <h3 style="font-size: 22px; margin-bottom: 14px;">Risk Intelligence</h3>
+                        <p style="margin-bottom: 20px;">Understand the environment before you commit — political,
+                            regulatory, trade, and operational risk analysis for informed investment decisions.</p>
+                        <a href="#risk-intelligence" class="gm-btn gm-btn--outline gm-btn--sm">Learn More <i
+                                class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- banner-section end -->
+    <!-- service overview end -->
 
 
-    <!-- about-section -->
-    <section class="about-section" id="about">
+    <!-- ============================================
+         MEDIA INTELLIGENCE — Detailed Service Line
+         ============================================ -->
+    <section class="gm-svc gm-svc--light" id="media-intelligence">
         <div class="auto-container">
-            <div class="row clearfix">
-                <div class="col-lg-6 col-md-6 col-sm-12 image-column">
-                    <div id="image_block_01">
-                        <div class="image-box wow slideInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
-                            <figure class="image js-tilt"><img src="assets/images/resource/illustration-2.png"
-                                    alt="About Greymatter"></figure>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 content-column">
-                    <div id="content_block_01">
-                        <div class="content-box">
-                            <div class="sec-title wow slideInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <p>About Greymatter</p>
-                                <h2>We Operate at the Intersection of Intelligence.</h2>
-                            </div>
-                            <div class="text wow slideInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
-                                <p>Real-time media monitoring, policy analysis, and strategic research. We track
-                                    narratives and deliver actionable intelligence - helping institutions, investors,
-                                    and governments make informed decisions in complex markets.</p>
-                            </div>
-                            <div class="text wow slideInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
-                                <p>Greymatter operates at the intersection of two disciplines: understanding what is
-                                    being said, and understanding what it means for your organisation. Our two core
-                                    service lines reflect this — Media Intelligence and Risk Intelligence — designed to
-                                    work together or independently depending on your needs.</p>
-                            </div>
-                            <!-- <ul class="list-item clearfix wow slideInUp" data-wow-delay="600ms"
-                                data-wow-duration="1500ms">
-                                <li>Media Intelligence &amp; Sentiment Tracking</li>
-                                <li>Risk Intelligence &amp; Regulatory Analysis</li>
-                                <li>Entity Due Diligence &amp; Strategic Research</li>
-                            </ul> -->
-                            <div class="btn-box wow slideInUp" data-wow-delay="900ms" data-wow-duration="1500ms"><a
-                                    href="#services" class="theme-btn style-one">Read More</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- about-section end -->
-
-    <!-- feature-section -->
-    <section class="feature-section" id="services">
-        <div class="auto-container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 feature-block">
-                    <div class="feature-block-one wow flipInY" data-wow-delay="0ms" data-wow-duration="1500ms">
-                        <div class="inner-box js-tilt">
-                            <div class="icon-box">
-                                <div class="anim-icon">
-                                    <span class="icon icon-1"></span>
-                                    <span class="icon icon-2"></span>
-                                    <span class="icon icon-3"></span>
-                                </div>
-                                <i class="flaticon-tools-and-utensils"></i>
-                            </div>
-                            <h3><a href="#media-intelligence">Media Intelligence</a></h3>
-                            <p>Real-time monitoring across print, broadcast, online, and social platforms with sentiment
-                                analysis.</p>
-                            <div class="btn-box"><a href="#media-intelligence" class="theme-btn style-two">Learn
-                                    More</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 feature-block">
-                    <div class="feature-block-one wow flipInY" data-wow-delay="300ms" data-wow-duration="1500ms">
-                        <div class="inner-box js-tilt">
-                            <div class="icon-box">
-                                <div class="anim-icon">
-                                    <span class="icon icon-1"></span>
-                                    <span class="icon icon-2"></span>
-                                    <span class="icon icon-3"></span>
-                                </div>
-                                <i class="flaticon-checked"></i>
-                            </div>
-                            <h3><a href="#risk-intelligence">Risk Intelligence</a></h3>
-                            <p>Political, regulatory, trade, and geopolitical risk analysis for informed investment
-                                decisions.</p>
-                            <div class="btn-box"><a href="#risk-intelligence" class="theme-btn style-two">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="col-lg-4 col-md-6 col-sm-12 feature-block">
-                    <div class="feature-block-one wow flipInY" data-wow-delay="600ms" data-wow-duration="1500ms">
-                        <div class="inner-box js-tilt">
-                            <div class="icon-box">
-                                <div class="anim-icon">
-                                    <span class="icon icon-1"></span>
-                                    <span class="icon icon-2"></span>
-                                    <span class="icon icon-3"></span>
-                                </div>
-                                <i class="flaticon-pie-chart"></i>
-                            </div>
-                            <h3><a href="#risk-intelligence">Due Diligence</a></h3>
-                            <p>Background intelligence on companies, ownership structures, key individuals, and business
-                                relationships.</p>
-                            <div class="btn-box"><a href="#risk-intelligence" class="theme-btn style-two">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </section>
-    <!-- feature-section end -->
-
-    <!-- process-section -->
-    <!-- <section class="process-section bg-color-1">
-        <div class="pattern-box">
-            <div class="pattern-1 wow slideInDown animated" data-wow-delay="500ms" data-wow-duration="1500ms"
-                style="background-image: url(assets/images/shape/pattern-3.png)"></div>
-        </div>
-        <div class="auto-container">
-            <div class="row clearfix">
-                <div class="col-lg-6 col-md-6 col-sm-12 content-column">
-                    <div id="content_block_02">
-                        <div class="content-box">
-                            <div class="sec-title wow slideInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                <p>How It Works</p>
-                                <h2>Our Two Core Service Lines</h2>
-                            </div>
-                            <div class="text wow slideInUp" data-wow-delay="300ms" data-wow-duration="1500ms">
-                                <p>Understanding what is being said and understanding what it means for your
-                                    organisation. Our two service lines reflect this — designed to work together or
-                                    independently.</p>
-                            </div>
-                            <div class="inner-box wow slideInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
-                                <div class="single-item">
-                                    <div class="count-box">1</div>
-                                    <h3><a href="#media-intelligence">Media Intelligence</a></h3>
-                                    <div class="text">Know what's being said — across every platform, in every language
-                                        that matters.</div>
-                                </div>
-                                <div class="single-item">
-                                    <div class="count-box">2</div>
-                                    <h3><a href="#risk-intelligence">Risk Intelligence</a></h3>
-                                    <div class="text">Understand the environment before you commit — political,
-                                        regulatory, trade, and operational.</div>
-                                </div>
-                                <div class="single-item">
-                                    <div class="count-box">3</div>
-                                    <h3><a href="#contact">Actionable Briefs</a></h3>
-                                    <div class="text">Translated into decisions you can act on — with the depth that
-                                        database searches cannot provide.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 image-column">
-                    <div id="image_block_02">
-                        <div class="image-box wow slideInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
-                            <figure class="image js-tilt"><img src="assets/images/resource/illustration-3.png"
-                                    alt="How Greymatter Works"></figure>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <!-- process-section end -->
-
-
-    <!-- service-section: Media Intelligence -->
-    <section class="gm-services-section alt-bg" id="media-intelligence">
-        <div class="auto-container">
-            <div class="gm-service-header">
-                <div class="gm-service-number wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms">Service
-                    Line 01</div>
-                <h2 class="wow slideInUp" data-wow-delay="100ms" data-wow-duration="1500ms">Media Intelligence</h2>
-                <div class="gm-service-header-desc wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+            <div class="gm-svc__header">
+                <div class="gm-svc__number gm-reveal">Service Line 01</div>
+                <h2 class="gm-svc__title gm-reveal gm-reveal-delay-1">Media Intelligence</h2>
+                <p class="gm-svc__desc gm-reveal gm-reveal-delay-2">
                     Know what's being said — across every platform, in every language that matters.
-                </div>
+                </p>
             </div>
-            <div class="gm-service-grid">
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-broadcast-tower"></i></div>
+            <div class="gm-svc-grid">
+                <div class="gm-svc-card gm-reveal">
+                    <div class="gm-svc-card__icon"><i class="fas fa-broadcast-tower"></i></div>
                     <h3>Real-Time Media Monitoring &amp; Sentiment Tracking</h3>
                     <p>Continuous monitoring across print, broadcast, online, and social platforms. We track narrative
                         shifts as they happen — including coverage from thousands of regional-language outlets that
                         global platforms do not reach — and deliver sentiment analysis calibrated for local context.</p>
                 </div>
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-project-diagram"></i></div>
+                <div class="gm-svc-card gm-reveal gm-reveal-delay-1">
+                    <div class="gm-svc-card__icon"><i class="fas fa-project-diagram"></i></div>
                     <h3>Stakeholder &amp; Influencer Mapping</h3>
                     <p>Identify the voices shaping opinion in your market. We map the media landscape — journalists,
                         commentators, institutional sources — so you know whose coverage drives perception and where
                         pressure is most likely to emerge.</p>
                 </div>
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="gm-svc-card gm-reveal gm-reveal-delay-2">
+                    <div class="gm-svc-card__icon"><i class="fas fa-exclamation-triangle"></i></div>
                     <h3>Crisis Monitoring &amp; Reputation Management</h3>
                     <p>Early warning systems for reputational threats. We surface negative narratives before they
                         escalate, track how a story evolves across media cycles, and provide the situational awareness
                         needed to respond with confidence.</p>
                 </div>
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-chess"></i></div>
+                <div class="gm-svc-card gm-reveal gm-reveal-delay-3">
+                    <div class="gm-svc-card__icon"><i class="fas fa-chess"></i></div>
                     <h3>Communications Strategy &amp; Narrative Analysis</h3>
                     <p>Beyond monitoring — we assess how your messaging is landing, how competitors are positioning
                         themselves, and where the strategic narrative opportunities lie.</p>
@@ -996,16 +396,18 @@
             </div>
         </div>
     </section>
-    <!-- service-section: Media Intelligence end -->
+    <!-- media intelligence end -->
 
 
-    <!-- bridge quote -->
+    <!-- ============================================
+         BRIDGE QUOTE
+         ============================================ -->
     <section class="gm-bridge">
         <div class="auto-container">
-            <div class="gm-bridge-icon wow fadeInDown" data-wow-delay="0ms" data-wow-duration="1500ms">
+            <div class="gm-bridge__icon gm-reveal">
                 <i class="fas fa-quote-left"></i>
             </div>
-            <p class="gm-bridge-quote wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+            <p class="gm-bridge__quote gm-reveal gm-reveal-delay-1">
                 <em>Media Intelligence</em> tells you what is being said.<br>
                 <em>Risk Intelligence</em> tells you what it means for your business.
             </p>
@@ -1014,43 +416,44 @@
     <!-- bridge quote end -->
 
 
-    <!-- service-section: Risk Intelligence -->
-    <section class="gm-services-section" id="risk-intelligence">
+    <!-- ============================================
+         RISK INTELLIGENCE — Detailed Service Line (Dark)
+         ============================================ -->
+    <section class="gm-svc gm-svc--dark" id="risk-intelligence">
         <div class="auto-container">
-            <div class="gm-service-header">
-                <div class="gm-service-number wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms">Service
-                    Line 02</div>
-                <h2 class="wow slideInUp" data-wow-delay="100ms" data-wow-duration="1500ms">Risk Intelligence</h2>
-                <div class="gm-service-header-desc wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
+            <div class="gm-svc__header">
+                <div class="gm-svc__number gm-reveal">Service Line 02</div>
+                <h2 class="gm-svc__title gm-reveal gm-reveal-delay-1">Risk Intelligence</h2>
+                <p class="gm-svc__desc gm-reveal gm-reveal-delay-2">
                     Understand the environment before you commit — political, regulatory, trade, and operational.
-                </div>
+                </p>
             </div>
-            <div class="gm-service-grid">
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-landmark"></i></div>
+            <div class="gm-svc-grid">
+                <div class="gm-svc-card gm-reveal">
+                    <div class="gm-svc-card__icon"><i class="fas fa-landmark"></i></div>
                     <h3>Political &amp; Regulatory Risk</h3>
                     <p>Track shifts in government policy, regulatory frameworks, and institutional direction. We monitor
                         legislative pipelines, ministry announcements, and political dynamics that carry material
                         implications for business operations and investment decisions — translating signal from noise
                         for executives who cannot afford to be surprised.</p>
                 </div>
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-exchange-alt"></i></div>
+                <div class="gm-svc-card gm-reveal gm-reveal-delay-1">
+                    <div class="gm-svc-card__icon"><i class="fas fa-exchange-alt"></i></div>
                     <h3>Trade &amp; Investment Risk</h3>
                     <p>Analyse tariff exposure, bilateral trade agreement developments, supply chain vulnerabilities,
                         and market access conditions. As trade policy becomes increasingly volatile, we provide the
                         context corporates and investors need to stress-test their exposure and plan accordingly.</p>
                 </div>
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-globe-asia"></i></div>
+                <div class="gm-svc-card gm-reveal gm-reveal-delay-2">
+                    <div class="gm-svc-card__icon"><i class="fas fa-globe-asia"></i></div>
                     <h3>Geopolitical Risk</h3>
                     <p>South Asia sits at the convergence of competing regional and global interests. We track the
                         geopolitical dynamics — India-Bangladesh-Myanmar relations, US-China strategic competition,
                         multilateral institution positioning — that shape the operating environment for businesses with
                         regional exposure.</p>
                 </div>
-                <div class="gm-service-card wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
-                    <div class="gm-service-card-icon"><i class="fas fa-user-shield"></i></div>
+                <div class="gm-svc-card gm-reveal gm-reveal-delay-3">
+                    <div class="gm-svc-card__icon"><i class="fas fa-user-shield"></i></div>
                     <h3>Entity Due Diligence</h3>
                     <p>Background intelligence on companies, ownership structures, key individuals, and business
                         relationships. Drawing on local-language sources and primary research, our due diligence reports
@@ -1059,34 +462,85 @@
             </div>
         </div>
     </section>
-    <!-- service-section: Risk Intelligence end -->
+    <!-- risk intelligence end -->
 
 
-    <!-- who we serve -->
-    <section class="gm-audience-section" id="audience">
+    <!-- ============================================
+         HOW IT WORKS — Process Pipeline
+         ============================================ -->
+    <section class="gm-process">
         <div class="auto-container">
-            <div class="gm-audience-header">
-                <div class="gm-section-label" style="justify-content: center;">Who We Serve</div>
-                <h2 class="wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms">Built for Consequential
-                    Decisions</h2>
-                <p class="wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Organisations making
-                    high-stakes decisions in complex markets.</p>
+            <div class="gm-process__header">
+                <div class="gm-label gm-reveal" style="justify-content: center;">Our Process</div>
+                <h2 class="gm-process__title gm-reveal gm-reveal-delay-1">How Our Intelligence Works</h2>
+                <p class="gm-reveal gm-reveal-delay-2"
+                    style="max-width: 520px; margin: 0 auto; text-align: center; color: var(--gm-text-secondary);">
+                    From raw data to actionable insight — a systematic approach to intelligence.
+                </p>
+            </div>
+            <div class="gm-process-grid">
+                <div class="gm-process-step gm-reveal">
+                    <div class="gm-process-step__number">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Collect</h3>
+                    <p>Monitor thousands of sources across media, policy, and regulatory channels in 12+ languages.</p>
+                </div>
+                <div class="gm-process-step gm-reveal gm-reveal-delay-1">
+                    <div class="gm-process-step__number">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3>Analyse</h3>
+                    <p>Filter noise from signal. Apply contextual analysis, sentiment tracking, and pattern recognition.
+                    </p>
+                </div>
+                <div class="gm-process-step gm-reveal gm-reveal-delay-2">
+                    <div class="gm-process-step__number">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Interpret</h3>
+                    <p>Translate data into strategic insight. Assess implications for your specific operations and
+                        decisions.</p>
+                </div>
+                <div class="gm-process-step gm-reveal gm-reveal-delay-3">
+                    <div class="gm-process-step__number">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Deliver</h3>
+                    <p>Actionable intelligence briefs — designed for executives who need clarity, not more data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- how it works end -->
+
+
+    <!-- ============================================
+         WHO WE SERVE
+         ============================================ -->
+    <section class="gm-audience" id="audience">
+        <div class="auto-container">
+            <div class="gm-audience__header">
+                <div class="gm-label gm-reveal" style="justify-content: center;">Who We Serve</div>
+                <h2 class="gm-audience__title gm-reveal gm-reveal-delay-1">Built for Consequential Decisions</h2>
+                <p class="gm-audience__sub gm-reveal gm-reveal-delay-2">Organisations making high-stakes decisions in
+                    complex markets.</p>
             </div>
             <div class="gm-audience-grid">
-                <div class="gm-audience-card wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
-                    <div class="gm-audience-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="gm-audience-card gm-reveal">
+                    <div class="gm-audience-card__icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Institutional Investors</h3>
                 </div>
-                <div class="gm-audience-card wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                    <div class="gm-audience-icon"><i class="fas fa-building"></i></div>
+                <div class="gm-audience-card gm-reveal gm-reveal-delay-1">
+                    <div class="gm-audience-card__icon"><i class="fas fa-building"></i></div>
                     <h3>Corporates Entering Emerging Markets</h3>
                 </div>
-                <div class="gm-audience-card wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
-                    <div class="gm-audience-icon"><i class="fas fa-globe"></i></div>
+                <div class="gm-audience-card gm-reveal gm-reveal-delay-2">
+                    <div class="gm-audience-card__icon"><i class="fas fa-globe"></i></div>
                     <h3>Multilateral Organisations</h3>
                 </div>
-                <div class="gm-audience-card wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1500ms">
-                    <div class="gm-audience-icon"><i class="fas fa-flag"></i></div>
+                <div class="gm-audience-card gm-reveal gm-reveal-delay-3">
+                    <div class="gm-audience-card__icon"><i class="fas fa-flag"></i></div>
                     <h3>Diplomatic Missions</h3>
                 </div>
             </div>
@@ -1095,28 +549,30 @@
     <!-- who we serve end -->
 
 
-    <!-- cta-section -->
-    <section class="gm-cta-section" id="contact">
+    <!-- ============================================
+         CTA SECTION
+         ============================================ -->
+    <section class="gm-cta" id="contact">
         <div class="auto-container">
-            <div class="gm-section-label wow slideInUp" data-wow-delay="0ms" data-wow-duration="1500ms"
-                style="justify-content: center;">Get Started</div>
-            <h2 class="wow slideInUp" data-wow-delay="100ms" data-wow-duration="1500ms">Start with Intelligence.</h2>
-            <p class="wow slideInUp" data-wow-delay="200ms" data-wow-duration="1500ms">Request a sample brief or speak
-                with our team to discuss your specific requirements.</p>
-            <div class="gm-cta-actions wow slideInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
+            <div class="gm-label gm-reveal" style="justify-content: center;">Get Started</div>
+            <h2 class="gm-cta__title gm-reveal gm-reveal-delay-1">Start with Intelligence.</h2>
+            <p class="gm-cta__sub gm-reveal gm-reveal-delay-2">Request a sample brief or speak with our team to
+                discuss your specific requirements.</p>
+            <div class="gm-cta__actions gm-reveal gm-reveal-delay-3">
                 <a href="javascript:void(0);" data-toggle="modal" data-target="#modalRequestBrief"
-                    class="theme-btn style-one">Request a Brief <i class="fas fa-arrow-right"
-                        style="margin-left: 8px;"></i></a>
+                    class="gm-btn gm-btn--primary">Request a Brief <i class="fas fa-arrow-right"></i></a>
                 <a href="javascript:void(0);" data-toggle="modal" data-target="#modalSpeakWithTeam"
-                    class="theme-btn style-two"><i class="fas fa-envelope" style="margin-right: 8px;"></i> Speak With
-                    Our Team</a>
+                    class="gm-btn gm-btn--outline"><i class="fas fa-envelope" style="margin-right: 6px;"></i> Speak
+                    With Our Team</a>
             </div>
         </div>
     </section>
-    <!-- cta-section end -->
+    <!-- cta section end -->
 
 
-    <!-- main-footer -->
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
     <footer class="main-footer" id="footer">
         <div class="auto-container">
             <div class="footer-top">
@@ -1218,8 +674,13 @@
     <script src="assets/js/script.js"></script>
 
     <script>
-        // Smooth scroll for anchor links
+        // ============================================
+        // GREYMATTER V2 — Custom Scripts
+        // ============================================
+
         document.addEventListener('DOMContentLoaded', function () {
+
+            // --- Smooth scroll for anchor links ---
             document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
                 anchor.addEventListener('click', function (e) {
                     var target = document.querySelector(this.getAttribute('href'));
@@ -1231,6 +692,63 @@
                     }
                 });
             });
+
+            // --- Scroll-triggered reveal animations ---
+            var revealElements = document.querySelectorAll('.gm-reveal');
+            var revealObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('gm-visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            revealElements.forEach(function (el) {
+                revealObserver.observe(el);
+            });
+
+            // --- Animated counters ---
+            var counterElements = document.querySelectorAll('[data-count]');
+            var counterObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counterElements.forEach(function (el) {
+                counterObserver.observe(el);
+            });
+
+            function animateCounter(el) {
+                var target = parseInt(el.getAttribute('data-count'));
+                var duration = 1800;
+                var start = 0;
+                var startTime = null;
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    var progress = Math.min((timestamp - startTime) / duration, 1);
+                    // Ease out cubic
+                    var easedProgress = 1 - Math.pow(1 - progress, 3);
+                    var current = Math.floor(easedProgress * target);
+                    // Format with comma for thousands
+                    el.textContent = current.toLocaleString() + (target >= 100 ? '+' : '');
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        el.textContent = target.toLocaleString() + (target >= 100 ? '+' : '');
+                    }
+                }
+
+                requestAnimationFrame(step);
+            }
         });
     </script>
 
@@ -1307,67 +825,6 @@
     </div>
 
     <style>
-        #modalRequestBrief .modal-header,
-        #modalSpeakWithTeam .modal-header {
-            background: #a8a9a9;
-            color: #fff;
-            border: none;
-            padding: 20px;
-        }
-
-        #modalRequestBrief .modal-title,
-        #modalSpeakWithTeam .modal-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            margin-bottom: 0;
-            color: #fff;
-        }
-
-        #modalRequestBrief .close,
-        #modalSpeakWithTeam .close {
-            color: #fff !important;
-            opacity: 0.8;
-            background: transparent;
-            border: none;
-            font-size: 28px;
-            padding: 0;
-            margin: -10px -5px 0 0;
-        }
-
-        #modalRequestBrief .close:hover,
-        #modalSpeakWithTeam .close:hover {
-            opacity: 1;
-        }
-
-        #modalRequestBrief .modal-body,
-        #modalSpeakWithTeam .modal-body {
-            padding: 30px;
-        }
-
-        #modalRequestBrief .form-control,
-        #modalSpeakWithTeam .form-control {
-            border-radius: 8px;
-            padding: 12px 15px;
-            border: 1px solid #eaedf5;
-            font-size: 15px;
-            width: 100%;
-            display: block;
-            margin-bottom: 15px;
-        }
-
-        #modalRequestBrief .form-control:focus,
-        #modalSpeakWithTeam .form-control:focus {
-            border-color: #a8a9a9;
-            box-shadow: 0 0 0 0.2rem rgba(99, 119, 238, 0.1);
-        }
-
-        #modalRequestBrief .theme-btn,
-        #modalSpeakWithTeam .theme-btn {
-            display: block;
-            width: 100%;
-            margin-top: 10px;
-        }
-
         .form-message {
             padding: 10px;
             border-radius: 8px;
