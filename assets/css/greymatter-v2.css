@@ -110,19 +110,66 @@ body.gm-v2 .mobile-menu .nav-logo img {
     object-fit: contain;
 }
 
-/* ---------- Header ---------- */
+/* ---------- Header — Complete Flexbox Override ---------- */
+
+/* Kill the template's absolute positioning and excessive padding */
 body.gm-v2 .main-header {
+    position: relative;
     background: var(--gm-bg-white);
     border-bottom: 1px solid var(--gm-border);
+    z-index: 999;
+}
+
+body.gm-v2 .main-header .outer-container {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 48px !important;
+    max-width: 1320px;
+    margin: 0 auto;
+    float: none !important;
+}
+
+/* Reset the outer-box to flex */
+body.gm-v2 .main-header .header-upper {
+    display: contents !important;
+}
+
+body.gm-v2 .main-header .outer-box {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    float: none !important;
+}
+
+/* Tighten logo — kill the 61px top padding and 125px right margin */
+body.gm-v2 .main-header .outer-container .logo-box {
+    padding: 16px 0 16px 0 !important;
+    margin-right: 48px !important;
+    float: none !important;
+}
+
+/* Tighten nav items — kill 64px top padding, reduce margin */
+body.gm-v2 .main-header .navigation > li {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 16px !important;
+    float: none !important;
+    display: inline-block;
+}
+
+body.gm-v2 .main-header .navigation > li:first-child {
+    margin-left: 0 !important;
 }
 
 body.gm-v2 .main-header .navigation > li > a {
-    font-family: var(--gm-font-body);
-    font-size: 14px;
-    font-weight: 500;
+    font-family: var(--gm-font-body) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
     letter-spacing: 0.01em;
     color: var(--gm-text-primary) !important;
-    text-transform: none;
+    text-transform: none !important;
+    line-height: 1.4 !important;
 }
 
 body.gm-v2 .main-header .navigation > li:hover > a,
@@ -130,43 +177,102 @@ body.gm-v2 .main-header .navigation > li.current > a {
     color: var(--gm-blue) !important;
 }
 
+/* Dropdown arrow alignment fix */
+body.gm-v2 .main-header .navigation li.dropdown .dropdown-btn {
+    top: 20px !important;
+    right: -28px !important;
+    color: var(--gm-text-muted) !important;
+}
+
+/* Dropdown menus */
+body.gm-v2 .main-header .navigation > li > ul {
+    background: var(--gm-bg-white) !important;
+    border: 1px solid var(--gm-border) !important;
+    border-radius: 8px !important;
+    box-shadow: var(--gm-shadow-lg) !important;
+    padding: 8px 0 !important;
+    top: 100% !important;
+}
+
+body.gm-v2 .main-header .navigation li ul li {
+    padding: 0 8px !important;
+}
+
 body.gm-v2 .main-header .navigation li ul li a {
     font-family: var(--gm-font-body) !important;
     font-size: 13px !important;
     font-weight: 500 !important;
-    color: var(--gm-text-primary) !important;
+    color: var(--gm-text-secondary) !important;
     text-transform: none !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
 }
 
 body.gm-v2 .main-header .navigation li ul li a:hover {
     color: var(--gm-blue) !important;
+    background: var(--gm-bg-primary) !important;
+}
+
+/* CTA button — kill the template's right-content spacing */
+body.gm-v2 .main-header .menu-right-content {
+    float: none !important;
+    margin-top: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+body.gm-v2 .main-header .menu-right-content .btn-box {
+    top: 0 !important;
+}
+
+/* Kill the template's pseudo-element slide animations on the button */
+body.gm-v2 .main-header .menu-right-content .btn-box a::before,
+body.gm-v2 .main-header .menu-right-content .btn-box a::after {
+    display: none !important;
 }
 
 body.gm-v2 .main-header .btn-box a,
 body.gm-v2 .main-header .menu-right-content .btn-box a {
     font-family: var(--gm-font-body) !important;
-    font-size: 14px !important;
+    font-size: 13px !important;
     font-weight: 600 !important;
     background: var(--gm-blue) !important;
     color: #fff !important;
     border-radius: 6px !important;
-    padding: 10px 24px !important;
+    padding: 10px 22px !important;
     transition: all var(--gm-duration) var(--gm-ease) !important;
     border: none !important;
     text-transform: none !important;
     letter-spacing: 0 !important;
+    box-shadow: none !important;
+    line-height: 1.4 !important;
 }
 
 body.gm-v2 .main-header .btn-box a:hover,
 body.gm-v2 .main-header .menu-right-content .btn-box a:hover {
     background: #1E40AF !important;
+    color: #fff !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3) !important;
 }
 
+/* ---------- Sticky Header — Frosted Glass ---------- */
 body.gm-v2 .sticky-header {
-    background: var(--gm-bg-white);
-    border-bottom: 1px solid var(--gm-border);
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    box-shadow: 0 1px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+body.gm-v2 .fixed-header .sticky-header {
+    box-shadow: 0 1px 8px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Mobile hamburger icon color */
+body.gm-v2 .menu-area .mobile-nav-toggler .icon-bar {
+    background-color: var(--gm-navy) !important;
 }
 
 /* ---------- Section Label ---------- */
@@ -272,7 +378,7 @@ body.gm-v2 .sticky-header {
    ============================================ */
 .gm-hero {
     position: relative;
-    padding: 140px 0 var(--gm-section-pad-lg);
+    padding: 80px 0 var(--gm-section-pad-lg);
     background: var(--gm-bg-white);
     overflow: hidden;
 }
@@ -1163,23 +1269,6 @@ body.gm-v2 .main-footer .widget-content ul li a {
 /* Fix template auto-container max-width */
 body.gm-v2 .auto-container {
     max-width: 1200px;
-}
-
-/* Header nav dropdown styling */
-body.gm-v2 .main-header .navigation li ul {
-    background: var(--gm-bg-white);
-    border: 1px solid var(--gm-border);
-    border-radius: 8px;
-    box-shadow: var(--gm-shadow-lg);
-    overflow: hidden;
-}
-
-body.gm-v2 .main-header .navigation li ul li {
-    border-bottom: 1px solid var(--gm-border-light);
-}
-
-body.gm-v2 .main-header .navigation li ul li:last-child {
-    border-bottom: none;
 }
 
 /* Scroll-to-top button */
