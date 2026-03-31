@@ -17,19 +17,19 @@
     --gm-bg-dark-surface: #162038;
 
     /* Brand Colors */
-    --gm-navy: #0F172A;
-    --gm-navy-light: #1E293B;
-    --gm-blue: #1D4ED8;
-    --gm-blue-light: #3B82F6;
-    --gm-blue-muted: #DBEAFE;
-    --gm-accent: #0EA5E9;
+    --gm-navy: #333333;
+    --gm-navy-light: #454545;
+    --gm-blue: #ef3a38;
+    --gm-blue-light: #f15b59;
+    --gm-blue-muted: #fceced;
+    --gm-accent: #a8a9a9;
 
     /* Text Colors */
-    --gm-text-primary: #0F172A;
-    --gm-text-secondary: #475569;
-    --gm-text-muted: #94A3B8;
+    --gm-text-primary: #333333;
+    --gm-text-secondary: #555555;
+    --gm-text-muted: #a8a9a9;
     --gm-text-on-dark: #F1F5F9;
-    --gm-text-on-dark-muted: #94A3B8;
+    --gm-text-on-dark-muted: #a8a9a9;
 
     /* Borders & Surfaces */
     --gm-border: #E2E8F0;
@@ -251,10 +251,10 @@ body.gm-v2 .main-header .menu-right-content .btn-box a {
 
 body.gm-v2 .main-header .btn-box a:hover,
 body.gm-v2 .main-header .menu-right-content .btn-box a:hover {
-    background: #1E40AF !important;
+    background: #cc2a28 !important;
     color: #fff !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(239, 58, 56, 0.3) !important;
 }
 
 /* ---------- Sticky Header — Frosted Glass ---------- */
@@ -328,10 +328,10 @@ body.gm-v2 .menu-area .mobile-nav-toggler .icon-bar {
 }
 
 .gm-btn--primary:hover {
-    background: #1E40AF;
+    background: #cc2a28;
     color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(29, 78, 216, 0.3);
+    box-shadow: 0 6px 20px rgba(239, 58, 56, 0.3);
 }
 
 .gm-btn--outline {
@@ -771,7 +771,7 @@ body.gm-v2 .menu-area .mobile-nav-toggler .icon-bar {
     align-items: flex-start;
     padding: 44px 40px;
     background: var(--gm-bg-white);
-    border: 1.5px solid var(--gm-blue-muted);
+    border: 1.5px solid var(--gm-accent);
 }
 
 .gm-svc-card--featured .gm-svc-card__icon {
