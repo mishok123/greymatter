@@ -55,7 +55,7 @@
 }
 
 .theme-btn.style-one {
-  background: linear-gradient(180deg, #a8a9a9 0%, #454545 100%);
+  background: #a8a9a9;
 }
 
 .banner-section .content-box .btn-box .video-btn i {
@@ -73,7 +73,7 @@
 
 .sticky-header .main-menu .navigation>li.current>a,
 .sticky-header .main-menu .navigation>li:hover>a {
-  background: linear-gradient(180deg, #a8a9a9 0%, #454545 100%);
+  background: #a8a9a9;
 }
 
 .theme-btn.style-two {
