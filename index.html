@@ -33,6 +33,254 @@
 
     <!-- Greymatter V2 Design System -->
     <link href="assets/css/greymatter-v2.css" rel="stylesheet">
+    
+    <!-- Map Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+
+    <style>
+      /* South Asia Regional Map Styles */
+      :root {
+        --country-default: #e8e5df;
+        --country-stroke: #ccc9c2;
+        --country-monitored-fill: #f5d5d0;
+        --country-monitored-stroke: #d9534f;
+        --country-active: #c0392b;
+      }
+      
+      #map-container {
+        position: relative;
+        width: 100%;
+        min-height: 520px;
+        aspect-ratio: 16 / 13; 
+        cursor: grab;
+        background: #fbfbfb;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      #map-container:active { cursor: grabbing; }
+
+      #map-svg {
+        width: 100%; height: 100%;
+        transition: none;
+      }
+
+      .country-path {
+        fill: var(--country-default);
+        stroke: var(--country-stroke);
+        stroke-width: 0.6;
+        transition: fill 0.22s;
+        cursor: default;
+      }
+
+      .country-path.monitored {
+        fill: var(--country-monitored-fill);
+        stroke: var(--country-monitored-stroke);
+        stroke-width: 1;
+        cursor: pointer;
+      }
+
+      .country-path.monitored:hover {
+        fill: #f0b8b2;
+        stroke: #c0392b;
+        stroke-width: 1.5;
+      }
+
+      .country-path.monitored.active {
+        fill: #c0392b;
+        stroke: #922b21;
+        stroke-width: 1.5;
+        stroke-dasharray: 6 3;
+        animation: border-march 3s linear infinite;
+      }
+
+      .country-label {
+        font-family: var(--gm-font-display, 'Inter', sans-serif);
+        font-size: 10px;
+        font-weight: 600;
+        fill: #000000;
+        pointer-events: none;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .country-label.monitored {
+        fill: #000000;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .country-label.monitored.active-label {
+        fill: #fff;
+      }
+
+      .pulse-ring {
+        fill: none;
+        stroke: #c0392b;
+        animation: ring-pulse 2.8s ease-out infinite;
+        opacity: 0;
+      }
+
+      @keyframes ring-pulse {
+        0% { r: 5px; opacity: 0.6; }
+        100% { r: 20px; opacity: 0; }
+      }
+
+      @keyframes border-march {
+        to { stroke-dashoffset: -100; }
+      }
+
+      .node-center { fill: #c0392b; }
+
+      .connection-line {
+        stroke: rgba(150,100,100,0.25);
+        stroke-width: 1;
+        stroke-dasharray: 5 7;
+        fill: none;
+        animation: dash-flow 5s linear infinite;
+      }
+
+      @keyframes dash-flow { to { stroke-dashoffset: -48; } }
+
+      #legend {
+        position: absolute; bottom: 20px; left: 20px;
+        background: rgba(255,255,255,0.95);
+        border: 1px solid #e0ddd8;
+        padding: 12px 16px;
+        font-size: 10px;
+        color: #111111;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        min-width: 195px;
+        border-radius: 4px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        text-align: left;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      #legend.collapsed {
+        min-width: 140px;
+        padding: 8px 12px;
+      }
+
+      .legend-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 10px;
+        user-select: none;
+      }
+
+      #legend.collapsed .legend-header {
+        margin-bottom: 0;
+      }
+
+      .legend-toggle {
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f4f0;
+        border: 1px solid #e0ddd8;
+        border-radius: 3px;
+        font-size: 10px;
+        transition: all 0.2s;
+      }
+      .legend-toggle:hover { background: #fff; border-color: #c0392b; color: #c0392b; }
+
+      .legend-body {
+        transition: opacity 0.2s, max-height 0.3s;
+        max-height: 200px;
+        opacity: 1;
+        overflow: hidden;
+      }
+
+      #legend.collapsed .legend-body {
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .legend-title { font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0 !important; }
+      .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+      .legend-swatch { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.12); }
+
+      #zoom-controls {
+        position: absolute; bottom: 20px; right: 20px;
+        display: flex; flex-direction: column; gap: 3px;
+        z-index: 10;
+      }
+      .zoom-btn {
+        width: 30px; height: 30px;
+        background: rgba(255,255,255,0.92);
+        border: 1px solid #e0ddd8;
+        cursor: pointer;
+        font-size: 15px;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 3px;
+      }
+      .zoom-btn:hover { border-color: #c0392b; color: #c0392b; }
+
+      #tooltip {
+        position: absolute;
+        background: rgba(255,255,255,0.97);
+        border: 1px solid #d9534f;
+        border-left: 3px solid #c0392b;
+        padding: 8px 12px;
+        font-size: 11px;
+        color: #000000;
+        pointer-events: none;
+        z-index: 100;
+        opacity: 0;
+        transition: opacity 0.15s;
+        border-radius: 2px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        white-space: nowrap;
+      }
+      .tooltip-name { font-weight: 700; color: #c0392b; font-size: 13px; margin-bottom: 2px; }
+
+      #sidebar {
+        position: absolute; right: 0; top: 0; bottom: 0;
+        width: 320px;
+        max-width: 100%;
+        background: #ffffff;
+        border-left: 1px solid #e0ddd8;
+        overflow-y: auto;
+        transform: translateX(101%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 50;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.06);
+        text-align: left;
+      }
+      #sidebar.open { transform: translateX(0); }
+      .sidebar-header { padding: 20px; border-bottom: 1px solid #e0ddd8; position: sticky; top: 0; background: #fff; z-index: 1; }
+      .sidebar-country { font-weight: 800; font-size: 20px; color: #000000; }
+      .sidebar-subtitle { font-size: 10px; color: #111111; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; }
+      .close-btn { position: absolute; top: 16px; right: 16px; background: none; border: 1px solid #e0ddd8; cursor: pointer; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+      .close-btn:hover { border-color: #c0392b; color: #c0392b; }
+      .sidebar-body { padding: 16px; }
+
+      .risk-section { margin-bottom: 20px; }
+      .section-label { font-size: 9px; color: #111111; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+      .section-label::after { content: ''; flex: 1; height: 1px; background: #e0ddd8; }
+      .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .risk-card { background: #fafafa; border: 1px solid #e0ddd8; padding: 10px; border-radius: 3px; }
+      .risk-card-label { font-size: 9px; color: #111111; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+      .risk-bar-track { height: 3px; background: #ebe9e4; border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
+      .risk-bar-fill { height: 100%; border-radius: 2px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+      .risk-value { font-weight: 700; font-size: 16px; }
+
+      .alert-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #eeece8; align-items: flex-start; }
+      .alert-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+      .alert-text { font-size: 11px; line-height: 1.6; color: #000000; }
+      .alert-tag { font-size: 9px; padding: 1px 6px; border-radius: 1px; display: inline-block; margin-bottom: 3px; letter-spacing: 0.08em; text-transform: uppercase; }
+      
+      .map-grid path { stroke: rgba(180,175,165,0.25); stroke-width: 0.5; }
+    </style>
 </head>
 
 <!-- page wrapper -->
@@ -67,8 +315,10 @@
                                     <li><a href="#about">About</a></li>
                                     <li class="dropdown"><a href="#services">Services</a>
                                         <ul>
-                                            <li><a href="#media-intelligence"><span class="gm-nav-num">01</span> Media Intelligence</a></li>
-                                            <li><a href="#risk-intelligence"><span class="gm-nav-num">02</span> Risk Intelligence</a></li>
+                                            <li><a href="#media-intelligence"><span class="gm-nav-num">01</span> Media
+                                                    Intelligence</a></li>
+                                            <li><a href="#risk-intelligence"><span class="gm-nav-num">02</span> Risk
+                                                    Intelligence</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#audience">Who We Serve</a></li>
@@ -127,7 +377,8 @@
             </div>
             <div class="social-links">
                 <ul class="clearfix">
-                    <li><a href="https://linkedin.com/company/greymatter-intelligence"><span class="fab fa-linkedin-in"></span></a></li>
+                    <li><a href="https://linkedin.com/company/greymatter-intelligence"><span
+                                class="fab fa-linkedin-in"></span></a></li>
                     <li><a href="https://twitter.com/greymatter_intl"><span class="fab fa-twitter"></span></a></li>
                 </ul>
             </div>
@@ -148,14 +399,13 @@
                             Intelligence for<br><em>Decision-Makers.</em>
                         </h1>
                         <p class="gm-hero__sub gm-reveal gm-reveal-delay-2">
-                            Intelligence where global platforms miss. We monitor South Asian media with 
-                            exclusive depth in Bengali and English — translating signal from noise 
+                            Intelligence where global platforms miss. We monitor South Asian media with
+                            exclusive depth in Bengali and English — translating signal from noise
                             for institutional decision-makers.
                         </p>
                         <div class="gm-hero__actions gm-reveal gm-reveal-delay-3">
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#modalRequestBrief"
-                                class="gm-btn gm-btn--primary">Request a Brief <i
-                                    class="fas fa-arrow-right"></i></a>
+                                class="gm-btn gm-btn--primary">Request a Brief <i class="fas fa-arrow-right"></i></a>
                             <a href="#services" class="gm-btn gm-btn--outline">Our Services</a>
                         </div>
                     </div>
@@ -192,22 +442,22 @@
 
                                 <!-- Mini Bar Chart -->
                                 <div class="gm-snap-chart">
-                                    <div class="gm-snap-bar gm-snap-bar--blue"
-                                        style="height:45%;animation-delay:0.1s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--blue" style="height:45%;animation-delay:0.1s;">
+                                    </div>
                                     <div class="gm-snap-bar gm-snap-bar--light"
                                         style="height:70%;animation-delay:0.2s;"></div>
-                                    <div class="gm-snap-bar gm-snap-bar--blue"
-                                        style="height:55%;animation-delay:0.3s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--blue" style="height:55%;animation-delay:0.3s;">
+                                    </div>
                                     <div class="gm-snap-bar gm-snap-bar--accent"
                                         style="height:85%;animation-delay:0.4s;"></div>
-                                    <div class="gm-snap-bar gm-snap-bar--blue"
-                                        style="height:65%;animation-delay:0.5s;"></div>
-                                    <div class="gm-snap-bar gm-snap-bar--navy"
-                                        style="height:92%;animation-delay:0.6s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--blue" style="height:65%;animation-delay:0.5s;">
+                                    </div>
+                                    <div class="gm-snap-bar gm-snap-bar--navy" style="height:92%;animation-delay:0.6s;">
+                                    </div>
                                     <div class="gm-snap-bar gm-snap-bar--light"
                                         style="height:48%;animation-delay:0.7s;"></div>
-                                    <div class="gm-snap-bar gm-snap-bar--blue"
-                                        style="height:75%;animation-delay:0.8s;"></div>
+                                    <div class="gm-snap-bar gm-snap-bar--blue" style="height:75%;animation-delay:0.8s;">
+                                    </div>
                                 </div>
 
                                 <!-- Live Alert Feed -->
@@ -260,7 +510,8 @@
                 <div class="gm-cred-item gm-reveal gm-reveal-delay-1">
                     <div style="display: flex; align-items: baseline; gap: 4px;">
                         <span class="gm-cred-value" data-count="2">0</span>
-                        <span class="gm-cred-label" style="text-transform: none; font-size: 14px;">(Bengali & English)</span>
+                        <span class="gm-cred-label" style="text-transform: none; font-size: 14px;">(Bengali &
+                            English)</span>
                     </div>
                     <span class="gm-cred-label">Primary Languages</span>
                 </div>
@@ -287,7 +538,8 @@
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="gm-reveal">
                         <div class="gm-about__img-wrap">
-                            <img src="assets/images/resource/about-greymatter.png" alt="Greymatter Intelligence — South Asia & Indo-Pacific Monitoring Network">
+                            <img src="assets/images/resource/about-greymatter.png"
+                                alt="Greymatter Intelligence — South Asia & Indo-Pacific Monitoring Network">
                         </div>
                     </div>
                 </div>
@@ -324,11 +576,13 @@
     <!-- ============================================
          TWO CORE SERVICE LINES — Overview Cards
          ============================================ -->
-    <section id="services" style="padding: 100px 0 60px; background: var(--gm-bg-white); border-top: 1px solid var(--gm-border);">
+    <section id="services"
+        style="padding: 100px 0 60px; background: var(--gm-bg-white); border-top: 1px solid var(--gm-border);">
         <div class="auto-container">
             <div class="text-center gm-reveal" style="margin-bottom: 60px;">
                 <div class="gm-label" style="justify-content: center;">Core Capabilities</div>
-                <h2 style="font-family: var(--gm-font-display); font-size: 42px; color: var(--gm-navy); margin-bottom: 14px;">
+                <h2
+                    style="font-family: var(--gm-font-display); font-size: 42px; color: var(--gm-navy); margin-bottom: 14px;">
                     Two Service Lines. One Clear Purpose.</h2>
                 <p style="max-width: 560px; margin: 0 auto; color: var(--gm-text-secondary); font-size: 17px;">
                     Understanding what is being said — and understanding what it means for your organisation.
@@ -388,9 +642,11 @@
                     <div class="gm-svc-card__icon"><i class="fas fa-broadcast-tower"></i></div>
                     <div>
                         <h3>Real-Time Media Monitoring &amp; Sentiment Tracking</h3>
-                        <p>Continuous monitoring across print, broadcast, online, and social platforms. We track narrative
+                        <p>Continuous monitoring across print, broadcast, online, and social platforms. We track
+                            narrative
                             shifts as they happen — including coverage from thousands of regional-language outlets that
-                            global platforms do not reach — and deliver sentiment analysis calibrated for local context.</p>
+                            global platforms do not reach — and deliver sentiment analysis calibrated for local context.
+                        </p>
                     </div>
                 </div>
                 <div class="gm-svc-card gm-reveal gm-reveal-delay-1">
@@ -455,9 +711,11 @@
                     <div class="gm-svc-card__icon"><i class="fas fa-landmark"></i></div>
                     <div>
                         <h3>Political &amp; Regulatory Risk</h3>
-                        <p>Track shifts in government policy, regulatory frameworks, and institutional direction. We monitor
+                        <p>Track shifts in government policy, regulatory frameworks, and institutional direction. We
+                            monitor
                             legislative pipelines, ministry announcements, and political dynamics that carry material
-                            implications for business operations and investment decisions — translating signal from noise
+                            implications for business operations and investment decisions — translating signal from
+                            noise
                             for executives who cannot afford to be surprised.</p>
                     </div>
                 </div>
@@ -549,118 +807,62 @@
                 <h2 class="gm-coverage__title gm-reveal gm-reveal-delay-1">Intelligence Where It Matters</h2>
                 <p class="gm-reveal gm-reveal-delay-2"
                     style="max-width: 560px; margin: 0 auto; text-align: center; color: var(--gm-text-secondary);">
-                    Deep coverage across South Asia and beyond — monitoring local-language sources that global platforms miss.
+                    Deep coverage across South Asia and beyond — monitoring local-language sources that global platforms
+                    miss.
                 </p>
             </div>
 
             <div class="row clearfix align-items-center">
                 <!-- Left: SVG Map -->
                 <div class="col-lg-7 col-md-12 col-sm-12">
-                    <div class="gm-coverage__map gm-reveal" style="position: relative;">
+                    <div class="gm-coverage__map gm-reveal" style="position: relative; overflow: hidden; border-radius: 8px;">
                         <!-- Live Status Panel -->
-                        <div class="gm-map-live">
+                        <div class="gm-map-live" style="z-index: 20;">
                             <div class="gm-live-dot"></div>
                             <span>Monitoring Live</span>
                         </div>
-                        <svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" class="gm-map-svg">
-                            <!-- Network Mesh Group -->
-                            <g class="gm-network-mesh">
-                                <path d="M530,250 L320,200 L210,170" fill="none" stroke="currentColor"/>
-                                <path d="M530,250 L310,380 L398,575" fill="none" stroke="currentColor"/>
-                                <path d="M530,250 L610,380" fill="none" stroke="currentColor"/>
-                                <path d="M320,200 L310,380" fill="none" stroke="currentColor"/>
-                                <path d="M610,380 L398,575" fill="none" stroke="currentColor"/>
-                            </g>
-                            <!-- Background grid lines for editorial feel -->
-                            <defs>
-                                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--gm-border)" stroke-width="0.5" opacity="0.3"/>
-                                </pattern>
-                                <!-- Glow filter for highlighted countries -->
-                                <filter id="glow">
-                                    <feGaussianBlur stdDeviation="3" result="blur"/>
-                                    <feMerge>
-                                        <feMergeNode in="blur"/>
-                                        <feMergeNode in="SourceGraphic"/>
-                                    </feMerge>
-                                </filter>
-                                <!-- Pulse animation for city dots -->
-                                <radialGradient id="pulseGrad" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="var(--gm-blue)" stop-opacity="0.6"/>
-                                    <stop offset="100%" stop-color="var(--gm-blue)" stop-opacity="0"/>
-                                </radialGradient>
-                            </defs>
-                            <rect width="800" height="700" fill="url(#grid)"/>
+                        
+                        <div id="map-container">
+                          <svg id="map-svg"></svg>
+                          
+                          <div id="legend" class="collapsed">
+                            <div class="legend-header" onclick="toggleLegend()">
+                              <div class="legend-title">Risk Index</div>
+                              <div class="legend-toggle" id="legend-toggle-icon">+</div>
+                            </div>
+                            <div class="legend-body">
+                              <div class="legend-item"><div class="legend-swatch" style="background:#4caf50"></div><span>LOW (0–30)</span></div>
+                              <div class="legend-item"><div class="legend-swatch" style="background:#f9a825"></div><span>MEDIUM (31–60)</span></div>
+                              <div class="legend-item"><div class="legend-swatch" style="background:#e67e22"></div><span>HIGH (61–80)</span></div>
+                              <div class="legend-item"><div class="legend-swatch" style="background:#c0392b"></div><span>CRITICAL (81–100)</span></div>
+                              <div style="margin-top:10px; border-top:1px solid #e0ddd8; padding-top:10px;">
+                                <div style="color:#000000; font-size:9px;">DRAG to pan · SCROLL to zoom<br>CLICK country for details</div>
+                              </div>
+                            </div>
+                          </div>
 
-                            <!-- Pakistan -->
-                            <path d="M120,180 L160,120 L200,100 L240,110 L260,140 L280,160 L300,150 L310,180 L290,220 L300,260 L310,300 L280,340 L250,380 L220,400 L190,380 L170,340 L140,300 L120,260 L110,220 Z"
-                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.5" class="gm-map-country"/>
+                          <div id="zoom-controls">
+                            <button type="button" class="zoom-btn" onclick="zoomIn()">+</button>
+                            <button type="button" class="zoom-btn" onclick="zoomOut()">−</button>
+                            <button type="button" class="zoom-btn" onclick="resetView()" style="font-size:10px">⌂</button>
+                          </div>
+                        </div>
 
-                            <!-- India -->
-                            <path d="M260,140 L300,120 L340,100 L380,90 L420,100 L460,120 L480,150 L500,130 L520,150 L540,180 L530,220 L520,200 L500,210 L490,240 L500,270 L510,300 L520,340 L500,380 L480,400 L450,430 L420,460 L400,500 L380,530 L370,560 L360,540 L350,500 L340,460 L320,440 L300,420 L280,400 L280,340 L310,300 L300,260 L290,220 L300,180 L280,160 Z"
-                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.6" class="gm-map-country"/>
+                        <!-- Tooltip appended to body via script or positioned fixed -->
+                        <div id="tooltip">
+                          <div class="tooltip-name" id="tt-name"></div>
+                          <div id="tt-info"></div>
+                        </div>
 
-                            <!-- Nepal -->
-                            <path d="M340,160 L380,140 L420,135 L460,140 L470,155 L440,165 L400,170 L360,172 L340,168 Z"
-                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.5" class="gm-map-country"/>
-
-                            <!-- Bangladesh (Primary — highlighted) -->
-                            <path d="M500,210 L520,200 L540,210 L555,230 L560,260 L550,290 L535,310 L520,300 L510,280 L500,270 L490,240 Z"
-                                  fill="var(--gm-blue)" stroke="#cc2a28" stroke-width="2" opacity="0.85" filter="url(#glow)" class="gm-map-country gm-map-country--primary"/>
-
-                            <!-- Myanmar -->
-                            <path d="M560,200 L580,180 L600,190 L620,220 L630,260 L640,300 L650,350 L640,400 L620,430 L600,450 L590,420 L580,380 L570,340 L560,300 L550,290 L560,260 L555,230 Z"
-                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.45" class="gm-map-country"/>
-
-                            <!-- Sri Lanka -->
-                            <path d="M390,550 L410,540 L420,560 L415,590 L400,600 L385,585 L385,565 Z"
-                                  fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1" opacity="0.5" class="gm-map-country"/>
-
-                            <!-- Connection lines from Bangladesh to other regions -->
-                            <line x1="530" y1="250" x2="380" y2="300" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
-                            <line x1="530" y1="250" x2="200" y2="280" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
-                            <line x1="530" y1="250" x2="600" y2="320" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
-                            <line x1="530" y1="250" x2="400" y2="570" stroke="var(--gm-blue)" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.3"/>
-
-                            <!-- City dots with pulse effect -->
-                            <!-- Dhaka (Primary) -->
-                            <circle cx="530" cy="250" r="16" fill="url(#pulseGrad)" class="gm-map-pulse"/>
-                            <circle cx="530" cy="250" r="5" fill="var(--gm-blue)" stroke="#fff" stroke-width="2"/>
-                            <text x="542" y="242" fill="var(--gm-navy)" font-size="11" font-weight="600" font-family="Inter, sans-serif">Dhaka</text>
-
-                            <!-- Delhi -->
-                            <circle cx="320" cy="200" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 0.5s"/>
-                            <circle cx="320" cy="200" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
-                            <text x="330" y="196" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Delhi</text>
-
-                            <!-- Mumbai -->
-                            <circle cx="310" cy="380" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 1s"/>
-                            <circle cx="310" cy="380" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
-                            <text x="290" y="400" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Mumbai</text>
-
-                            <!-- Islamabad -->
-                            <circle cx="210" cy="170" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 1.5s"/>
-                            <circle cx="210" cy="170" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
-                            <text x="168" y="162" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Islamabad</text>
-
-                            <!-- Yangon -->
-                            <circle cx="610" cy="380" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 2s"/>
-                            <circle cx="610" cy="380" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
-                            <text x="620" y="376" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Yangon</text>
-
-                            <!-- Colombo -->
-                            <circle cx="398" cy="575" r="12" fill="url(#pulseGrad)" class="gm-map-pulse" style="animation-delay: 2.5s"/>
-                            <circle cx="398" cy="575" r="4" fill="var(--gm-blue)" stroke="#fff" stroke-width="1.5"/>
-                            <text x="412" y="572" fill="var(--gm-text-secondary)" font-size="10" font-weight="500" font-family="Inter, sans-serif">Colombo</text>
-
-                            <!-- Legend -->
-                            <g transform="translate(20, 640)">
-                                <circle cx="8" cy="8" r="5" fill="var(--gm-blue)" opacity="0.85"/>
-                                <text x="20" y="12" fill="var(--gm-text-muted)" font-size="10" font-family="Inter, sans-serif">Primary coverage</text>
-                                <circle cx="148" cy="8" r="5" fill="var(--gm-blue-muted)" stroke="var(--gm-blue)" stroke-width="1"/>
-                                <text x="160" y="12" fill="var(--gm-text-muted)" font-size="10" font-family="Inter, sans-serif">Extended coverage</text>
-                            </g>
-                        </svg>
+                        <!-- Sidebar for country details -->
+                        <div id="sidebar">
+                          <div class="sidebar-header">
+                            <div class="sidebar-country" id="sb-country">—</div>
+                            <div class="sidebar-subtitle" id="sb-region">Select a country</div>
+                            <button type="button" class="close-btn" onclick="closeSidebar()">✕</button>
+                          </div>
+                          <div class="sidebar-body" id="sb-body"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -671,17 +873,19 @@
                             <div class="gm-coverage__detail-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div>
                                 <h3>Primary Market: Bangladesh</h3>
-                                <p>Deep coverage of Bangla-language media, policy announcements, regulatory filings, and parliamentary proceedings — sources that international platforms do not index.</p>
+                                <p>Deep coverage of Bangla-language media, policy announcements, regulatory filings, and
+                                    parliamentary proceedings — sources that international platforms do not index.</p>
                             </div>
                         </div>
                         <div class="gm-coverage__detail-item gm-reveal gm-reveal-delay-1">
                             <div class="gm-coverage__detail-icon"><i class="fas fa-globe-asia"></i></div>
                             <div>
                                 <h3>South Asia & Indo-Pacific</h3>
-                                <p>Regional monitoring across India, Myanmar, Nepal, Sri Lanka, and Pakistan — tracking cross-border dynamics that affect investment and policy environments.</p>
+                                <p>Regional monitoring across India, Myanmar, Nepal, Sri Lanka, and Pakistan — tracking
+                                    cross-border dynamics that affect investment and policy environments.</p>
                             </div>
                         </div>
-                        <div class="gm-coverage__detail-item gm-reveal gm-reveal-delay-2">
+                        <!-- <div class="gm-coverage__detail-item gm-reveal gm-reveal-delay-2">
                             <div class="gm-coverage__detail-icon"><i class="fas fa-language"></i></div>
                             <div>
                                 <h3>Local-Language Capability</h3>
@@ -701,7 +905,7 @@
                             <span class="gm-coverage__lang">Mandarin</span>
                             <span class="gm-coverage__lang">French</span>
                             <span class="gm-coverage__lang">Japanese</span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -824,8 +1028,10 @@
                                 </ul>
                             </div>
                             <ul class="social-links clearfix">
-                                <li><a href="https://linkedin.com/company/greymatter-intelligence"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="https://twitter.com/greymatter_intl"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="https://linkedin.com/company/greymatter-intelligence"><i
+                                            class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="https://twitter.com/greymatter_intl"><i class="fab fa-twitter"></i></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -1080,6 +1286,364 @@
                 });
             });
         });
+    </script>
+    <script>
+      const countryData = {
+        "Bangladesh": {
+          flag: "🇧🇩", region: "South Asia · Bay of Bengal",
+          overallRisk: 58,
+          risks: {
+            "Political": { value: 65, color: "#f9a825" },
+            "Economic": { value: 52, color: "#f9a825" },
+            "Security": { value: 45, color: "#4caf50" },
+            "Climate": { value: 78, color: "#e67e22" }
+          },
+          gdp: "$460B", fdi: "$1.6B", growth: "5.4%",
+          alerts: [
+            { type: "TRADE", color: "#2980b9", text: "Garment exports to EU under scrutiny following labour law reform delays — potential GSP+ risk." },
+            { type: "CLIMATE", color: "#e67e22", text: "Cyclone season outlook severe; coastal infrastructure investment gap at $8B." },
+            { type: "POLITICAL", color: "#f9a825", text: "Post-2024 interim government stabilising; investor sentiment cautiously improving." },
+            { type: "BORDER", color: "#8e44ad", text: "India-Bangladesh trade corridor expansion under negotiation; BSTI compliance hurdles persist." }
+          ]
+        },
+        "India": {
+          flag: "🇮🇳", region: "South Asia · Peninsula",
+          overallRisk: 32,
+          risks: {
+            "Political": { value: 28, color: "#4caf50" },
+            "Economic": { value: 24, color: "#4caf50" },
+            "Security": { value: 48, color: "#4caf50" },
+            "Geopolitical": { value: 55, color: "#f9a825" }
+          },
+          gdp: "$3.7T", fdi: "$71B", growth: "6.8%",
+          alerts: [
+            { type: "INVESTMENT", color: "#4caf50", text: "PLI scheme attracting $35B in manufacturing pledges; semiconductor fab race underway." },
+            { type: "GEOPOLIT.", color: "#f9a825", text: "China border tensions at LAC elevated; defence procurement surge ongoing." },
+            { type: "TRADE", color: "#2980b9", text: "India-EU FTA negotiations at critical stage; pharma and dairy sticking points." },
+            { type: "REGIONAL", color: "#8e44ad", text: "Neighbourhood First policy reshaping SAARC dynamics; bilateral agreements superseding multilateral." }
+          ]
+        },
+        "Myanmar": {
+          flag: "🇲🇲", region: "Southeast Asia · Indochina",
+          overallRisk: 91,
+          risks: {
+            "Political": { value: 96, color: "#c0392b" },
+            "Economic": { value: 88, color: "#c0392b" },
+            "Security": { value: 94, color: "#c0392b" },
+            "Humanitarian": { value: 92, color: "#c0392b" }
+          },
+          gdp: "$65B", fdi: "$1.1B", growth: "-3.2%",
+          alerts: [
+            { type: "CRITICAL", color: "#c0392b", text: "Military junta control fragmenting; Resistance forces holding 60%+ of territory in multiple states." },
+            { type: "SANCTIONS", color: "#e67e22", text: "US, EU, UK sanctions expanded; banking sector near-collapse. FDI effectively frozen." },
+            { type: "BORDER", color: "#f9a825", text: "Bangladesh-Myanmar border under strain; over 1.3M Rohingya refugees in Cox's Bazar." },
+            { type: "TRADE", color: "#8e44ad", text: "China maintaining trade links via Yunnan corridor; estimated $2.2B in 2024 bilateral flow." }
+          ]
+        },
+        "Nepal": {
+          flag: "🇳🇵", region: "South Asia · Himalayas",
+          overallRisk: 42,
+          risks: {
+            "Political": { value: 60, color: "#f9a825" },
+            "Economic": { value: 48, color: "#4caf50" },
+            "Security": { value: 22, color: "#4caf50" },
+            "Governance": { value: 58, color: "#f9a825" }
+          },
+          gdp: "$42B", fdi: "$0.3B", growth: "3.9%",
+          alerts: [
+            { type: "POLITICAL", color: "#f9a825", text: "Coalition government fragility persists; 12 governments in 16 years creating policy uncertainty." },
+            { type: "INVESTMENT", color: "#2980b9", text: "Hydropower export potential ($100B+) remains underleveraged; India power trade deals advancing." },
+            { type: "GEOPOLIT.", color: "#8e44ad", text: "China-India competition for influence intensifying; BRI projects stalled, Indian connectivity preferred." },
+            { type: "ECONOMIC", color: "#4caf50", text: "Remittance inflows ($9.3B) stabilising economy; tourism recovery above pre-pandemic levels." }
+          ]
+        },
+        "Sri Lanka": {
+          flag: "🇱🇰", region: "South Asia · Indian Ocean",
+          overallRisk: 55,
+          risks: {
+            "Political": { value: 50, color: "#f9a825" },
+            "Economic": { value: 68, color: "#e67e22" },
+            "Security": { value: 28, color: "#4caf50" },
+            "Debt": { value: 74, color: "#e67e22" }
+          },
+          gdp: "$84B", fdi: "$0.6B", growth: "4.2%",
+          alerts: [
+            { type: "DEBT", color: "#e67e22", text: "IMF Extended Fund Facility ($3B) progressing; debt restructuring with China and private creditors ongoing." },
+            { type: "RECOVERY", color: "#4caf50", text: "Tourism revenues recovering strongly; $3B target for 2025 within reach." },
+            { type: "GEOPOLIT.", color: "#8e44ad", text: "Hambantota Port geopolitics: India-China strategic competition for Indian Ocean influence." },
+            { type: "POLITICAL", color: "#f9a825", text: "New administration post-2024 elections pursuing economic reforms; IMF conditionality compliance improving." }
+          ]
+        },
+        "Pakistan": {
+          flag: "🇵🇰", region: "South Asia · Arabian Sea",
+          overallRisk: 76,
+          risks: {
+            "Political": { value: 80, color: "#e67e22" },
+            "Economic": { value: 72, color: "#e67e22" },
+            "Security": { value: 75, color: "#e67e22" },
+            "Fiscal": { value: 82, color: "#c0392b" }
+          },
+          gdp: "$376B", fdi: "$1.5B", growth: "2.4%",
+          alerts: [
+            { type: "FISCAL", color: "#c0392b", text: "IMF $7B bailout under implementation; primary surplus targets pressuring social expenditure." },
+            { type: "SECURITY", color: "#e67e22", text: "TTP insurgency escalating in KP and Balochistan; CPEC corridor security under threat." },
+            { type: "GEOPOLIT.", color: "#8e44ad", text: "India-Pakistan tensions remain elevated; no formal trade since 2019 suspension." },
+            { type: "CPEC", color: "#2980b9", text: "CPEC Phase II slow-moving; Chinese investment appetite cautious amid repayment disputes." }
+          ]
+        }
+      };
+
+      function getRiskColor(val) {
+        if (val <= 30) return "#4caf50";
+        if (val <= 60) return "#f9a825";
+        if (val <= 80) return "#e67e22";
+        return "#c0392b";
+      }
+
+      const width = 800; // Define viewBox dimensions
+      const height = 700;
+
+      const svg = d3.select("#map-svg")
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("preserveAspectRatio", "xMidYMid meet");
+
+      svg.append("defs").append("clipPath").attr("id", "map-clip")
+        .append("rect").attr("width", width).attr("height", height);
+
+      const g = svg.append("g").attr("clip-path", "url(#map-clip)");
+
+      const projection = d3.geoMercator()
+        .center([82, 22])
+        .scale(850)
+        .translate([width * 0.45, height * 0.5]);
+
+      const path = d3.geoPath().projection(projection);
+
+      const MONITORED = ["Bangladesh", "India", "Myanmar", "Nepal", "Sri Lanka", "Pakistan"];
+
+      async function loadMap() {
+        try {
+          const response = await fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+          const world = await response.json();
+          
+          const countryNames = {
+            "050": "Bangladesh",
+            "356": "India",
+            "104": "Myanmar",
+            "524": "Nepal",
+            "144": "Sri Lanka",
+            "586": "Pakistan",
+          };
+
+          const countries = topojson.feature(world, world.objects.countries);
+
+          const gridG = g.append("g").attr("class", "map-grid");
+          for (let lon = 40; lon <= 120; lon += 10) {
+            gridG.append("path")
+              .datum({ type: "LineString", coordinates: [[lon, -10], [lon, 60]] })
+              .attr("d", path)
+              .attr("fill", "none");
+          }
+          for (let lat = -10; lat <= 60; lat += 10) {
+            gridG.append("path")
+              .datum({ type: "LineString", coordinates: [[40, lat], [120, lat]] })
+              .attr("d", path)
+              .attr("fill", "none");
+          }
+
+          g.selectAll(".country-path")
+            .data(countries.features)
+            .enter()
+            .append("path")
+            .attr("class", d => {
+              const name = countryNames[d.id] || "";
+              return `country-path${MONITORED.includes(name) ? " monitored" : ""}`;
+            })
+            .attr("d", path)
+            .attr("data-name", d => countryNames[d.id] || "")
+            .style("fill", d => {
+              const name = countryNames[d.id];
+              if (!name) return null;
+              const risk = countryData[name]?.overallRisk;
+              if (risk <= 30) return "rgba(76,175,80,0.15)";
+              if (risk <= 60) return "rgba(249,168,37,0.18)";
+              if (risk <= 80) return "rgba(230,126,34,0.2)";
+              return "rgba(192,57,43,0.22)";
+            })
+            .on("click", function(event, d) {
+              const name = countryNames[d.id];
+              if (name && MONITORED.includes(name)) openSidebar(name, this);
+            })
+            .on("mousemove", function(event, d) {
+              const name = countryNames[d.id];
+              if (name && MONITORED.includes(name)) {
+                const tt = document.getElementById("tooltip");
+                const mapContainer = document.getElementById("map-container");
+                const rect = mapContainer.getBoundingClientRect();
+                
+                document.getElementById("tt-name").textContent = `${countryData[name].flag} ${name}`;
+                document.getElementById("tt-info").textContent = `Risk Index: ${countryData[name].overallRisk}/100 · GDP: ${countryData[name].gdp}`;
+                
+                tt.style.opacity = "1";
+                tt.style.left = (event.clientX - rect.left + 15) + "px";
+                tt.style.top = (event.clientY - rect.top - 15) + "px";
+              }
+            })
+            .on("mouseleave", function() {
+              document.getElementById("tooltip").style.opacity = "0";
+            });
+
+          const centroids = {};
+          countries.features.forEach(d => {
+            const name = countryNames[d.id];
+            if (name && MONITORED.includes(name)) {
+              const c = path.centroid(d);
+              if (!isNaN(c[0])) centroids[name] = c;
+            }
+          });
+
+          const connections = [
+            ["Bangladesh", "India"], ["Bangladesh", "Myanmar"],
+            ["India", "Nepal"], ["India", "Sri Lanka"],
+            ["India", "Pakistan"], ["India", "Myanmar"]
+          ];
+
+          const lineG = g.append("g");
+          connections.forEach(([a, b]) => {
+            if (centroids[a] && centroids[b]) {
+              lineG.append("path")
+                .attr("class", "connection-line")
+                .attr("d", `M${centroids[a][0]},${centroids[a][1]} Q${(centroids[a][0]+centroids[b][0])/2 + 10},${(centroids[a][1]+centroids[b][1])/2 - 15} ${centroids[b][0]},${centroids[b][1]}`);
+            }
+          });
+
+          Object.entries(centroids).forEach(([name, [cx, cy]]) => {
+            const risk = countryData[name]?.overallRisk;
+            const color = getRiskColor(risk);
+
+            for (let i = 0; i < 3; i++) {
+              g.append("circle")
+                .attr("class", "pulse-ring")
+                .attr("cx", cx).attr("cy", cy)
+                .attr("r", 6)
+                .style("stroke", color)
+                .style("animation-delay", `${i * 0.8}s`);
+            }
+
+            g.append("circle")
+              .attr("class", "node-center")
+              .attr("cx", cx).attr("cy", cy)
+              .attr("r", 4)
+              .style("fill", color)
+              .style("filter", `drop-shadow(0 0 6px ${color})`);
+
+            const labelY = cy - 16;
+            g.append("text")
+              .attr("class", "country-label monitored")
+              .attr("x", cx)
+              .attr("y", labelY)
+              .attr("text-anchor", "middle")
+              .text(name.toUpperCase());
+          });
+
+        } catch(err) {
+          console.error("Map load error:", err);
+          g.append("text").attr("x", width/2).attr("y", height/2)
+            .attr("text-anchor", "middle")
+            .style("fill", "#000000")
+            .text("Loading map data...");
+        }
+      }
+
+      const zoom = d3.zoom()
+        .scaleExtent([0.5, 8])
+        .on("zoom", (event) => {
+          g.attr("transform", event.transform);
+        });
+
+      svg.call(zoom);
+
+      function zoomIn() { svg.transition().duration(300).call(zoom.scaleBy, 1.4); }
+      function zoomOut() { svg.transition().duration(300).call(zoom.scaleBy, 0.7); }
+      function resetView() {
+        svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity);
+      }
+
+      let activePath = null;
+      function openSidebar(name, pathEl) {
+        if (activePath) activePath.classList.remove("active");
+        activePath = pathEl;
+        if (pathEl) pathEl.classList.add("active");
+
+        const d = countryData[name];
+        document.getElementById("sb-country").textContent = `${d.flag} ${name}`;
+        document.getElementById("sb-region").textContent = d.region;
+
+        let html = `
+          <div class="risk-section">
+            <div class="section-label">Overall Risk Index</div>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+              <div style="font-weight:800; font-size:42px; color:${getRiskColor(d.overallRisk)}; line-height:1;">${d.overallRisk}</div>
+              <div>
+                <div style="font-size:10px; color:${getRiskColor(d.overallRisk)}; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;">${d.overallRisk>80?'CRITICAL':d.overallRisk>60?'HIGH':d.overallRisk>30?'MEDIUM':'LOW'}</div>
+                <div style="font-size:10px; color:#000000;">GDP: ${d.gdp}</div>
+                <div style="font-size:10px; color:#000000;">Growth: ${d.growth} · FDI: ${d.fdi}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="risk-section">
+            <div class="section-label">Risk Breakdown</div>
+            <div class="risk-grid">
+        `;
+
+        Object.entries(d.risks).forEach(([k, v]) => {
+          html += `
+            <div class="risk-card">
+              <div class="risk-card-label">${k}</div>
+              <div class="risk-bar-track">
+                <div class="risk-bar-fill" style="width:${v.value}%; background:${v.color};"></div>
+              </div>
+              <div class="risk-value" style="color:${v.color}">${v.value}</div>
+            </div>
+          `;
+        });
+
+        html += `</div></div>
+          <div class="risk-section">
+            <div class="section-label">Active Signals</div>
+        `;
+
+        d.alerts.forEach(a => {
+          html += `
+            <div class="alert-item">
+              <div class="alert-dot" style="background:${a.color}"></div>
+              <div>
+                <div class="alert-tag" style="background:${a.color}22; color:${a.color}; border:1px solid ${a.color}44">${a.type}</div>
+                <div class="alert-text">${a.text}</div>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `</div>`;
+        document.getElementById("sb-body").innerHTML = html;
+        document.getElementById("sidebar").classList.add("open");
+      }
+
+      function closeSidebar() {
+        document.getElementById("sidebar").classList.remove("open");
+        if (activePath) { activePath.classList.remove("active"); activePath = null; }
+      }
+
+      function toggleLegend() {
+        const legend = document.getElementById("legend");
+        const icon = document.getElementById("legend-toggle-icon");
+        legend.classList.toggle("collapsed");
+        icon.textContent = legend.classList.contains("collapsed") ? "+" : "−";
+      }
+
+      loadMap();
     </script>
 </body>
 
